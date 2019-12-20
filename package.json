@@ -1,0 +1,15 @@
+{
+  "name": "td3",
+  "version": "1.0.0",
+  "description": "TD3 NODEJS CHAT BOT",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "achraf & yassine & melvin",
+  "license": "ISC",
+  "dependencies": {
+    "@types/node": "^12.12.21",
+    "express": "^4.17.1"
+  }
+}
