@@ -39,7 +39,10 @@ io.sockets.on('connection',(socket) => {
     socket.on('sending message', (message) => {
         console.log('Message is received :', message);
         cpt++;
-        io.sockets.emit('new message', {message: questionMap.get(cpt)});
+        if(cpt != 3 ){
+            io.sockets.emit('new message', {message: questionMap.get(cpt)});
+
+        }
         console.log('Message send  :',
             {message: questionMap.get(cpt)},
             ' cpt = ', cpt);
@@ -57,7 +60,7 @@ io.sockets.on('connection',(socket) => {
             console.log(dataMap);
             asyncCall();
             cpt = 0;
-                 }
+           }
 
 
 
@@ -97,7 +100,14 @@ function asyncCall() {
                console.log('statusCode:',
                    response && response.statusCode,
                    'BODY ', serverResponse);
-               io.sockets.emit('new message',  {message: body});
+               if(response.statusCode != 200){
+                   io.sockets.emit('new message',
+                       {message: serverResponse});
+               }else{
+                   io.sockets.emit('new message',
+                       {message: JSON.stringify(serverResponse)});
+               }
+
            }
 
        });
