@@ -1,43 +1,111 @@
-// --- INIT DEPENDENCIES
-let express = require('express'),
-    app = express(),
-    path = require('path');
+const express = require('express');
+const path = require('path');
+const bodyParser = require ('body-parser');
 
-// --
-let http = require('http').Server(app);
-let io = require('socket.io')(http);
 
-//app.use('/js/',express.static(config.root + '/public'));
-// ------------------------
-// ROUTE
-// ------------------------
-app.get('/',(req,res)=>{
-    res.sendFile(path.join(__dirname,'index.html'))
-});
 
-// ------------------------
-//
-// ------------------------
-io.on('connection', function(socket){
+const app = express();
+const server = require('http').createServer(app);
+const io = require('socket.io').listen(server);
+const PORT = 3000,
+    request = require('request'),
+    fetch   = require('node-fetch');
+server.listen(PORT);
+console.log('Server is running');
+const rp = require('request-promise');
 
-    console.log('a user connected');
 
-    socket.on('disconnect', function(){
-        console.log('user disconnected');
+const connections = [];
+let questionMap = new Map();
+questionMap.set(0, ' Donne ton birthname' );
+questionMap.set(1, ' Donne ton lastname' );
+questionMap.set(2, ' Donne ton SSN' );
+let cpt = 0;
+
+let dataMap = new Map();
+let serverResponse ='';
+
+
+io.sockets.on('connection',(socket) => {
+    connections.push(socket);
+    console.log(' %s sockets is connected', connections.length);
+    io.sockets.emit('new message', {message: questionMap.get(cpt)});
+
+
+    socket.on('disconnect', () => {
+        connections.splice(connections.indexOf(socket), 1);
     });
 
-    socket.on('message', function(message){
-        console.log(message);
-        io.emit('cool', message);
+    socket.on('sending message', (message) => {
+        console.log('Message is received :', message);
+        cpt++;
+        io.sockets.emit('new message', {message: questionMap.get(cpt)});
+        console.log('Message send  :',
+            {message: questionMap.get(cpt)},
+            ' cpt = ', cpt);
+
+        if( cpt == 1){
+            dataMap.set('birthname', message);
+        }
+
+        if( cpt == 2){
+            dataMap.set('lastname', message);
+        }
+
+        if( cpt == 3) {
+            dataMap.set('ssn', message);
+            console.log(dataMap);
+            asyncCall();
+            cpt = 0;
+                 }
+
+
+
+
+
     });
-
-    socket.broadcast.emit('hi');
-
 });
 
-// ------------------------
-// START SERVER
-// ------------------------
-http.listen(3010,function(){
-    console.info('HTTP server started on port 3010');
+
+function asyncCall() {
+    let postData = {
+        lastname: dataMap.get('birthname'),
+        birthname: dataMap.get('lastname'),
+        ssn: dataMap.get('ssn')
+    };
+
+
+    console.log('mon req body', postData);
+
+    const clientServerOptions = {
+        uri: 'http://localhost:3011/people/',
+        body: postData,
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        json: true // Automatically stringifies the body to JSON
+
+    };
+
+    request(clientServerOptions, function (error, response, body) {
+           if(error != null){
+               console.log('error:', error);
+           }
+          else{
+               serverResponse = body;
+               console.log('statusCode:',
+                   response && response.statusCode,
+                   'BODY ', serverResponse);
+               io.sockets.emit('new message',  {message: body});
+           }
+
+       });
+
+
+
+}
+
+app.get('/', (req, res) => {
+    res.sendFile(__dirname + '/index.html');
 });
