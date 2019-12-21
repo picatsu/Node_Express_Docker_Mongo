@@ -38,6 +38,8 @@ io.sockets.on('connection',(socket) => {
 
     socket.on('sending message', (message) => {
         console.log('Message is received :', message);
+        io.sockets.emit('new message', {message: ' ==> you said : '+message});
+
         cpt++;
         if(cpt != 3 ){
             io.sockets.emit('new message', {message: questionMap.get(cpt)});
