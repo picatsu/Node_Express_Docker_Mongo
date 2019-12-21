@@ -11,12 +11,16 @@ const express = require('express'),
     request = require('request'),
     myRessource = require('../ressources/function'),
     app = express(),
-    database = mongoose.connect("mongodb://localhost:27017/test", {
+
+    url = "mongodb://localhost:27017/test",
+    database = mongoose.connect(url, {
         promiseLibrary: require('bluebird'),
         useNewUrlParser: true,
         useUnifiedTopology: true
 
     }),
+
+
     swaggerOptions = {
         swaggerDefinition: {
             info: {
@@ -33,6 +37,9 @@ const express = require('express'),
     },
     swaggerDocs = swaggerJsDoc(swaggerOptions)
 ;
+
+
+
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
