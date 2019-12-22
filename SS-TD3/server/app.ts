@@ -40,17 +40,25 @@ export class SocketServer {
             console.log('Running server on port %s', this.port);
         });
 
-        this.io.on('connect', (socket: any) => {
-            console.log('Connected client on port %s.', this.port);
-            socket.on('message', (m: string) => {
-                console.log('[server](message): %s', JSON.stringify(m));
-                this.io.emit('messagerecu', m);
-            });
+        this.io.on("connection", socket => {
+			// Log whenever a user connects
+			console.log("user connected");
+		  
+			// Log whenever a client disconnects from our websocket server
+			socket.on("disconnect", function() {
+			  console.log("user disconnected");
+			});
+			this.io.emit("message", { type: "new-message", text: 'yo ' });
 
-            socket.on('disconnect', () => {
-                console.log('Client disconnected');
-            });
-        });
+		  
+			// When we receive a 'message' event from our client, print out
+			// the contents of that message and then echo it back to our client
+			// using `io.emit()`
+			socket.on("message", message => {
+			  console.log("Message Received: " + message);
+			  this.io.emit("message", { type: "new-message", text: message });
+			});
+		  });
 	}
 	
 	public getApp(): express.Application {
