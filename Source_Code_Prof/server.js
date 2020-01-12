@@ -45,9 +45,7 @@ io.sockets.on('connection', (socket) => {
             io.sockets.emit('new message', { message: questionMap.get(cpt) });
 
         }
-        console.log('Message send  :',
-            { message: questionMap.get(cpt) },
-            ' cpt = ', cpt);
+        console.log('Message send  :', { message: questionMap.get(cpt) }, ' cpt = ', cpt);
 
         if (cpt == 1) {
             dataMap.set('birthname', message);
