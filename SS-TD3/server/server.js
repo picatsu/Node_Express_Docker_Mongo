@@ -108,9 +108,6 @@ function asyncCall() {
         }
 
     });
-
-
-
 }
 
 app.use(express.static(__dirname + '/dist'));
