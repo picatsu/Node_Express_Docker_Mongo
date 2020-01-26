@@ -24,7 +24,7 @@
       
 <mat-slide-toggle [checked]="toogled" labelPosition="before" (change)="toggleDarkTheme()">Save ? {{toogled}}</mat-slide-toggle>
 
-<div *ngFor="let message of messages">
+<div *ngFor="let message of messages" style="max-height: 600px; overflow-x: 600px;">
     <div class="alert alert-primary" role="alert"> {{message.message}}  </div> 
 </div>
 

@@ -18,11 +18,14 @@ fetch   = require('node-fetch')
 module.exports.createPeople = async function ( req, res){
     let exist = false;
     PeopleSchema.find({ssn : req.body.ssn}, function (err, docs) {
-        if (docs.length) {
+        if(docs != null ) {
+             if (docs.length) {
             exist = true;
 
 
         }
+        }
+       
     });
 
     console.log(' j ai recu ', req.body);
@@ -62,7 +65,8 @@ module.exports.createPeople = async function ( req, res){
 
     commune = externalDataCallCommune.data.nom;
     departement = externalDataCallDepartement.data.nom;
-
+    shouldAdd = req.body.shouldAdd;
+    console.log('should add ? ', shouldAdd);
     let newData = new PeopleSchema({
         _id: new mongoose.Types.ObjectId(),
         lastname: req.body.lastname,
@@ -76,7 +80,7 @@ module.exports.createPeople = async function ( req, res){
 
 );
 
-    if(ssnRequest.controlSsnValue() && !exist){
+    if(ssnRequest.controlSsnValue() && !exist && shouldAdd){
         newData
             .save()
             .then((result)=>{
@@ -94,6 +98,9 @@ module.exports.createPeople = async function ( req, res){
                 });
     }
     else{
+        if(!shouldAdd){
+            res.status(200).json(newData);
+        }
         if(exist){
             res.status(404).json(" SSN Already in DATABASE ")
         }

@@ -1,3 +1,5 @@
+import { watchFile } from "fs";
+
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
@@ -9,11 +11,11 @@ const server = require('http').createServer(app);
 const io = require('socket.io').listen(server);
 const PORT = 3000,
     request = require('request');
-    
+
 server.listen(PORT);
 console.log('Server is running');
 const rp = require('request-promise');
-
+const shouldAdd = true;
 
 const connections = [];
 let questionMap = new Map();
@@ -59,6 +61,8 @@ io.sockets.on('connection', (socket) => {
             dataMap.set('ssn', message);
             asyncCall();
             cpt = 0;
+            
+            ///io.sockets.emit('new message', { message: questionMap.get(cpt) });
         }
 
 
@@ -73,7 +77,8 @@ function asyncCall() {
     let postData = {
         lastname: dataMap.get('birthname'),
         birthname: dataMap.get('lastname'),
-        ssn: dataMap.get('ssn')
+        ssn: dataMap.get('ssn'),
+        shouldAdd : shouldAdd,
     };
 
 
@@ -95,13 +100,13 @@ function asyncCall() {
         }
         else {
 
-            serverResponse = body;
+           
             console.log('statusCode:',
-                response && response.statusCode, 'BODY ', serverResponse);
+                response && response.statusCode, 'BODY ', body);
 
             io.sockets.emit('new message', {
                 message:
-                    JSON.stringify(serverResponse)
+                    JSON.stringify(body)
             });
 
 
