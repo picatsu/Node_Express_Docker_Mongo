@@ -8,8 +8,8 @@ const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io').listen(server);
 const PORT = 3000,
-    request = require('request'),
-    fetch = require('node-fetch');
+    request = require('request');
+    
 server.listen(PORT);
 console.log('Server is running');
 const rp = require('request-promise');

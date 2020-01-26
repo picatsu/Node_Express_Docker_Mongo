@@ -15,7 +15,9 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { ToastrModule } from 'ngx-toastr';
 import { JwPaginationComponent } from 'jw-angular-pagination';
-
+import {MatDialogModule} from '@angular/material/dialog';
+import { NbChatModule } from '@nebular/theme';
+import { NbThemeModule } from '@nebular/theme';
 
 
 @NgModule({
@@ -23,8 +25,7 @@ import { JwPaginationComponent } from 'jw-angular-pagination';
     AppComponent , JwPaginationComponent ],
  
   imports: [
-    
-    ToolbarModule,
+        ToolbarModule,
     DashboardModule,
     NgbModule,
     NgbPaginationModule, 
@@ -34,7 +35,11 @@ import { JwPaginationComponent } from 'jw-angular-pagination';
     FormsModule,
     ReactiveFormsModule,
     BrowserModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    MatDialogModule,
+    NbChatModule,
+    NbThemeModule.forRoot(),
+
       ],
   bootstrap: [AppComponent],
   schemas: [
