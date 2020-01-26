@@ -1,6 +1,3 @@
-<<<<<<< HEAD
- 
-=======
 
 
 <p>SSN TEST : 177023523800522</p>
@@ -41,4 +38,3 @@
 
 
 ![Alt text](capture.PNG?raw=true "On Start")
->>>>>>> origin
