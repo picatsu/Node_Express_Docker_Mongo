@@ -6,7 +6,7 @@ import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChange
 
 import { ThemeService } from '../services/theme.service';
 import { FilterPipe } from '../services/filter.pipe';
-import { BuildServiceService, BuildJson, Scenarii } from '../services/build-service.service';
+import { BuildServiceService} from '../services/build-service.service';
 import { ToastrService } from 'ngx-toastr';
 import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
@@ -31,15 +31,12 @@ export class TileComponent implements OnInit {
   tab = [];
   showCompare: boolean = false;
   oldAndnewBuild: any;
-  activeBuild: BuildJson;
   numberShow = 20;
   
   constructor(private themeService: ThemeService, private buildService: BuildServiceService, private toastr: ToastrService
     , config: NgbModalConfig, private modalService: NgbModal, private modalService2: NgbModal) {
 
-    this.buildService.getTab().forEach( x=> {
-      this.tab.push(x);
-    });
+  
     
    
     config.backdrop = 'static';
@@ -50,7 +47,6 @@ export class TileComponent implements OnInit {
   
 
   open(content, build: any) {
-    this.activeBuild = this.tab.find( element => element.Build == build);
     this.modalService.open(content, {windowClass: 'dark-modal', size: 'xl', centered: true, scrollable: true }  );
   }
 
@@ -130,7 +126,6 @@ export class TileComponent implements OnInit {
   }
 
   clearAll(){
-    this.tab.forEach( x =>  { ( x as BuildJson).checked = false } );
     this.showCompare = false;
 
   }

@@ -1,6 +1,9 @@
 import { Component, OnInit, TemplateRef, ViewChild, ElementRef } from '@angular/core';
 import { BuildServiceService } from '../services/build-service.service';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import * as io from 'socket.io-client';
+import { Observable } from 'rxjs';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 
 @Component({
@@ -11,22 +14,74 @@ import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 export class ExtractComponent implements OnInit {
   message: string;
   messages: string[] = [];
+  private url = 'http://localhost:3000';
+
   @ViewChild('content', {static: true}) mymodal: ElementRef;
 
-  constructor(private buildService: BuildServiceService, private modalService: NgbModal) { 
+  private socket; 
+  tab = [];
+  toogled = true;
+  isChecked = true;
 
+
+  constructor( private modalService: NgbModal) {  
+    this.socket = io(this.url);
     
-
-   }
-  toogled: boolean;
   
+    this.socket.emit('getAll', 'HELLO');
+   this.isChecked = true;
+
+  }
+
+  
+  shouldADD() {
+    console.log('activé ?');
+    this.socket.emit('shouldAdd', this.isChecked);
+    this.isChecked = !this.isChecked;
+  }
+  
+
+
+  public sendMessage() {
+   console.log('XXXXXCONSOLE LOG ', this.message);
+
+   this.socket.emit('sending message', this.message);
+   this.message = '';
+  }
+  
+
+ 
+ getMessage() {
+   //return this.socket
+     //  .fromEvent("new message") ;
+     return Observable.create((observer) => {
+       this.socket.on('new message', (message) => {
+           observer.next(message);
+       });
+       this.socket.on('getAll', (message) => {
+        this.tab = JSON.parse(message.message);
+        console.log('tableau ', this.tab);
+      });
+   });
+
+ } 
+
+
+  getTypeText(mtext: string) {
+    if(mtext.includes('said') || mtext.includes('PLEASE GIVE') || mtext.includes('errors') || mtext.includes('ADDED SUCCESSFULLY')  ){
+      return 'success';
+    }
+    else{
+      return 'danger';
+    }
+ }
 
   toggleDarkTheme() {
     this.toogled = ! this.toogled;
   }
 
   ngOnInit() {
-    this.buildService.getMessage().subscribe((message: string) => {
+    this.getMessage().subscribe((message: string) => {
       this.messages.push(message);
 
     });
@@ -38,38 +93,15 @@ export class ExtractComponent implements OnInit {
   closeResult: string;
 
   open(content) {
-    console.log(" LLL", content);
 
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      this.socket.emit('shouldAdd', this.isChecked);
     });
   }
 
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return  `with: ${reason}`;
-    }
-  }
  
   
 
-
-  sendMessage(){
-    this.buildService.sendMessage(this.message);
-    this.message = '';
-    
-  }
-
-
-  getMessage() {
-    //console.log(' DDD ', this.buildService.getMessage() );  
-  
-  } 
 
 }

@@ -2,8 +2,8 @@ import { watchFile } from "fs";
 
 const express = require('express');
 const path = require('path');
-const bodyParser = require('body-parser');
-
+const bodyParser = require('body-parser'),
+fetch   = require('node-fetch');
 
 
 const app = express();
@@ -27,6 +27,7 @@ let cpt = 0;
 let dataMap = new Map();
 let serverResponse = '';
 
+let AllData = '';
 
 io.sockets.on('connection', (socket) => {
     connections.push(socket);
@@ -34,8 +35,19 @@ io.sockets.on('connection', (socket) => {
     io.sockets.emit('new message', { message: questionMap.get(cpt) });
 
 
+    socket.on('shouldAdd', (message ) => {
+       console.log('shouldADD ? ', message );
+    });
+
     socket.on('disconnect', () => {
         connections.splice(connections.indexOf(socket), 1);
+    });
+    socket.on('getAll', (message) => {
+        getAllData();
+       
+        io.sockets.emit('getAll', { message:  AllData }   );
+        console.log(' jai envoye toutes les donnees ', { message:  AllData });
+
     });
 
     socket.on('sending message', (message) => {
@@ -100,7 +112,6 @@ function asyncCall() {
         }
         else {
 
-           
             console.log('statusCode:',
                 response && response.statusCode, 'BODY ', body);
 
@@ -118,6 +129,16 @@ function asyncCall() {
 
 }
 
+function getAllData() {
+    let va = "";
+    fetch('http://localhost:3011/people/')
+    .then(res => res.json())
+    .then(data => {
+        AllData = JSON.stringify(data);
+        va = JSON.stringify(data);
+    });
+    return va;
+}
 app.use(express.static(__dirname + '/dist'));
 
 app.get('/', (req, res) => {
