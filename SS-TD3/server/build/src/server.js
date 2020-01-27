@@ -1,13 +1,16 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 const express = require('express');
 const path = require('path');
-const bodyParser = require('body-parser');
+const bodyParser = require('body-parser'), fetch = require('node-fetch');
 const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io').listen(server);
-const PORT = 3000, request = require('request'), fetch = require('node-fetch');
+const PORT = 3000, request = require('request');
 server.listen(PORT);
 console.log('Server is running');
 const rp = require('request-promise');
+const shouldAdd = true;
 const connections = [];
 let questionMap = new Map();
 questionMap.set(0, ' Donne ton birthname');
@@ -16,12 +19,21 @@ questionMap.set(2, ' Donne ton SSN');
 let cpt = 0;
 let dataMap = new Map();
 let serverResponse = '';
+let AllData = '';
 io.sockets.on('connection', (socket) => {
     connections.push(socket);
     console.log(' %s sockets is connected', connections.length);
     io.sockets.emit('new message', { message: questionMap.get(cpt) });
+    socket.on('shouldAdd', (message) => {
+        console.log('shouldADD ? ', message);
+    });
     socket.on('disconnect', () => {
         connections.splice(connections.indexOf(socket), 1);
+    });
+    socket.on('getAll', (message) => {
+        getAllData();
+        io.sockets.emit('getAll', { message: AllData });
+        console.log(' jai envoye toutes les donnees ', { message: AllData });
     });
     socket.on('sending message', (message) => {
         console.log('Message is received :', message);
@@ -41,6 +53,7 @@ io.sockets.on('connection', (socket) => {
             dataMap.set('ssn', message);
             asyncCall();
             cpt = 0;
+            ///io.sockets.emit('new message', { message: questionMap.get(cpt) });
         }
     });
 });
@@ -48,7 +61,8 @@ function asyncCall() {
     let postData = {
         lastname: dataMap.get('birthname'),
         birthname: dataMap.get('lastname'),
-        ssn: dataMap.get('ssn')
+        ssn: dataMap.get('ssn'),
+        shouldAdd: shouldAdd,
     };
     const clientServerOptions = {
         uri: 'http://localhost:3011/people/',
@@ -64,13 +78,22 @@ function asyncCall() {
             console.log('error:', error);
         }
         else {
-            serverResponse = body;
-            console.log('statusCode:', response && response.statusCode, 'BODY ', serverResponse);
+            console.log('statusCode:', response && response.statusCode, 'BODY ', body);
             io.sockets.emit('new message', {
-                message: JSON.stringify(serverResponse)
+                message: JSON.stringify(body)
             });
         }
     });
+}
+function getAllData() {
+    let va = "";
+    fetch('http://localhost:3011/people/')
+        .then(res => res.json())
+        .then(data => {
+        AllData = JSON.stringify(data);
+        va = JSON.stringify(data);
+    });
+    return va;
 }
 app.use(express.static(__dirname + '/dist'));
 app.get('/', (req, res) => {

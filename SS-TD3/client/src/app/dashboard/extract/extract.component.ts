@@ -4,6 +4,7 @@ import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import * as io from 'socket.io-client';
 import { Observable } from 'rxjs';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 
 @Component({
@@ -24,11 +25,11 @@ export class ExtractComponent implements OnInit {
   isChecked = true;
 
 
-  constructor( private modalService: NgbModal) {  
+  constructor( private modalService: NgbModal ) {  
     this.socket = io(this.url);
     
+    
   
-    this.socket.emit('getAll', 'HELLO');
    this.isChecked = true;
 
   }
@@ -40,7 +41,7 @@ export class ExtractComponent implements OnInit {
     this.isChecked = !this.isChecked;
   }
   
-
+ 
 
   public sendMessage() {
    console.log('XXXXXCONSOLE LOG ', this.message);
@@ -58,6 +59,7 @@ export class ExtractComponent implements OnInit {
        this.socket.on('new message', (message) => {
            observer.next(message);
        });
+       this.socket.emit('getAll', 'HELLO');
        this.socket.on('getAll', (message) => {
         this.tab = JSON.parse(message.message);
         console.log('tableau ', this.tab);
