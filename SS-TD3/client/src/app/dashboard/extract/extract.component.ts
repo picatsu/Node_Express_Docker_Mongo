@@ -45,7 +45,12 @@ export class ExtractComponent implements OnInit {
 
   public sendMessage() {
    console.log('XXXXXCONSOLE LOG ', this.message);
+   this.socket.emit('getAll', 'HELLO');
 
+   this.socket.on('getAll', (message) => {
+    this.tab = JSON.parse(message.message);
+    console.log('tableau ', this.tab);
+  });
    this.socket.emit('sending message', this.message);
    this.message = '';
   }
