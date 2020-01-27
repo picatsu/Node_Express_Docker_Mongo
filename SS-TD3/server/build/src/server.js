@@ -20,6 +20,7 @@ let cpt = 0;
 let dataMap = new Map();
 let serverResponse = '';
 let AllData = '';
+getAllData();
 io.sockets.on('connection', (socket) => {
     connections.push(socket);
     console.log(' %s sockets is connected', connections.length);
@@ -53,6 +54,7 @@ io.sockets.on('connection', (socket) => {
             dataMap.set('ssn', message);
             asyncCall();
             cpt = 0;
+            getAllData();
             ///io.sockets.emit('new message', { message: questionMap.get(cpt) });
         }
     });
