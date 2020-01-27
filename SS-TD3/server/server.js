@@ -20,6 +20,7 @@ let questionMap = new Map();
 questionMap.set(0, ' Donne ton birthname');
 questionMap.set(1, ' Donne ton lastname');
 questionMap.set(2, ' Donne ton SSN');
+questionMap.set(3, ' Veux-tu sauvegarder');
 let cpt = 0;
 
 let dataMap = new Map();
@@ -41,7 +42,7 @@ io.sockets.on('connection', (socket) => {
         io.sockets.emit('new message', { message: ' ==> you said : ' + message });
 
         cpt++;
-        if (cpt != 3) {
+        if (cpt != 4) {
             io.sockets.emit('new message', { message: questionMap.get(cpt) });
 
         }
@@ -57,8 +58,13 @@ io.sockets.on('connection', (socket) => {
 
         if (cpt == 3) {
             dataMap.set('ssn', message);
-            asyncCall();
-            cpt = 0;
+        }
+        if (cpt == 4) {
+            dataMap.set('save', message);
+            if  (dataMap.get('save') == 'y'){
+              asyncCall();
+            }
+            cpt = 0;  
         }
 
 
