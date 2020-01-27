@@ -20,8 +20,12 @@ const shouldAdd = true;
 const connections = [];
 let questionMap = new Map();
 questionMap.set(0, ' Donne ton birthname');
-questionMap.set(1, ' Donne ton lastname');
-questionMap.set(2, ' Donne ton SSN');
+questionMap.set(1, ' Save : "s" or "n" ');
+questionMap.set(2, ' Donne ton lastname');
+questionMap.set(3, ' Save : "s" or "n" ');
+questionMap.set(4, ' Donne ton SSN');
+questionMap.set(5, ' Save : "s" or "n" ');
+
 let cpt = 0;
 
 let dataMap = new Map();
@@ -54,9 +58,8 @@ io.sockets.on('connection', (socket) => {
     socket.on('sending message', (message) => {
         console.log('Message is received :', message);
         io.sockets.emit('new message', { message: ' ==> you said : ' + message });
-
         cpt++;
-        if (cpt != 3) {
+        if (cpt != 6) {
             io.sockets.emit('new message', { message: questionMap.get(cpt) });
 
         }
@@ -67,22 +70,41 @@ io.sockets.on('connection', (socket) => {
         }
 
         if (cpt == 2) {
-            dataMap.set('lastname', message);
+            dataMap.set('save', message);
+            if (dataMap.get('save') != 's'){
+                cpt = 1;
+            }
         }
 
         if (cpt == 3) {
+          dataMap.set('lastname', message);
+        }
+
+        if (cpt == 4) {
+            dataMap.set('save', message);
+            if (dataMap.get('save') != 's'){
+                cpt = 3;
+            }
+          }
+
+        if (cpt == 5) {
             dataMap.set('ssn', message);
-            asyncCall();
-            cpt = 0;
-            getAllData();
             
             ///io.sockets.emit('new message', { message: questionMap.get(cpt) });
         }
 
-
-
-
-
+        if (cpt == 6) {
+            dataMap.set('save', message);
+            if (dataMap.get('save') != 's'){
+                cpt = 5;
+            }
+            else{
+                asyncCall();
+                cpt = 0;
+                getAllData();  
+            }
+            ///io.sockets.emit('new message', { message: questionMap.get(cpt) });
+        }
     });
 });
 
