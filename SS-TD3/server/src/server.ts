@@ -32,6 +32,7 @@ getAllData();
 io.sockets.on('connection', (socket) => {
     connections.push(socket);
     console.log(' %s sockets is connected', connections.length);
+    cpt=0;
     io.sockets.emit('new message', { message: questionMap.get(cpt) });
 
 

@@ -26,8 +26,13 @@
 
 <div class="scrollBarClass">  
 <div *ngFor="let message of messages.reverse()" >
-    <div 
-    class="alert alert-primary" role="alert"> {{message.message}}  </div> 
+    <div   role="alert" 
+    [ngClass]="{
+      'alert alert-danger': message.server ===  null,
+      'alert alert-primary': message.server == true  , 
+    'alert alert-secondary': message.server == false }">
+    {{message.serverMessage}}  
+  </div> 
 </div>
  </div>
     <input type="text" class="form-control"   aria-describedby="addon-wrapping" [(ngModel)]="message">

@@ -5,6 +5,7 @@ import * as io from 'socket.io-client';
 import { Observable } from 'rxjs';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import { Message } from './message';
 
 
 @Component({
@@ -14,7 +15,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 })
 export class ExtractComponent implements OnInit {
   message: string;
-  messages: string[] = [];
+  messages: Message[] = [];
   private url = 'http://localhost:3000';
 
   @ViewChild('content', {static: true}) mymodal: ElementRef;
@@ -27,10 +28,7 @@ export class ExtractComponent implements OnInit {
 
   constructor( private modalService: NgbModal ) {  
     this.socket = io(this.url);
-    
-    
-  
-   this.isChecked = true;
+    this.isChecked = true;
 
   }
 
@@ -44,9 +42,7 @@ export class ExtractComponent implements OnInit {
  
 
   public sendMessage() {
-   console.log('XXXXXCONSOLE LOG ', this.message);
    this.socket.emit('getAll', 'HELLO');
-
    this.socket.on('getAll', (message) => {
     this.tab = JSON.parse(message.message);
     console.log('tableau ', this.tab);
@@ -55,6 +51,23 @@ export class ExtractComponent implements OnInit {
    this.message = '';
   }
   
+  fillMessages(msg: any) {
+    console.log('fill ', msg.message);
+
+    if(msg.message.includes('==>')) {
+      this.messages.push({
+        server: true,
+        serverMessage: msg.message
+    
+      });
+    } else { 
+      this.messages.push({
+        server: false,
+        serverMessage: msg.message
+    
+      });
+    }
+  }
 
  
  getMessage() {
@@ -62,6 +75,7 @@ export class ExtractComponent implements OnInit {
      //  .fromEvent("new message") ;
      return Observable.create((observer) => {
        this.socket.on('new message', (message) => {
+         this.fillMessages(message);
            observer.next(message);
        });
        this.socket.emit('getAll', 'HELLO');
@@ -89,7 +103,7 @@ export class ExtractComponent implements OnInit {
 
   ngOnInit() {
     this.getMessage().subscribe((message: string) => {
-      this.messages.push(message);
+     // this.messages.push(message);
 
     });
     this.toogled = true;
