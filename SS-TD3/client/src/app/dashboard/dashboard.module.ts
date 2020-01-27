@@ -24,8 +24,7 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
     FormsModule,
     ScrollingModule,
     MatDividerModule,
-    SocketIoModule.forRoot(config)
-    
+    SocketIoModule.forRoot(config)    
   ],
   declarations: [ DashboardComponent, TileComponent, FilterPipe, ExtractComponent ],
   exports: [ DashboardComponent ],

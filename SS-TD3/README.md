@@ -19,7 +19,7 @@
 
 <li> cd ../server </li>
 <li> npm install </li>
-<li> npm start </li>
+<li> npm run dev </li>
 
 </ul>
 

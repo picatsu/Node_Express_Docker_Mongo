@@ -39,6 +39,7 @@ import { NbThemeModule } from '@nebular/theme';
     MatDialogModule,
     NbChatModule,
     NbThemeModule.forRoot(),
+     
 
       ],
   bootstrap: [AppComponent],

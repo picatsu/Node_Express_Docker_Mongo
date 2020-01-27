@@ -28,7 +28,7 @@ let dataMap = new Map();
 let serverResponse = '';
 
 let AllData = '';
-
+getAllData();
 io.sockets.on('connection', (socket) => {
     connections.push(socket);
     console.log(' %s sockets is connected', connections.length);
@@ -46,6 +46,7 @@ io.sockets.on('connection', (socket) => {
         getAllData();
        
         io.sockets.emit('getAll', { message:  AllData }   );
+        
         console.log(' jai envoye toutes les donnees ', { message:  AllData });
 
     });
@@ -73,6 +74,7 @@ io.sockets.on('connection', (socket) => {
             dataMap.set('ssn', message);
             asyncCall();
             cpt = 0;
+            getAllData();
             
             ///io.sockets.emit('new message', { message: questionMap.get(cpt) });
         }
