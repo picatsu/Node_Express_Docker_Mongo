@@ -58,21 +58,25 @@ io.sockets.on('connection', (socket) => {
     socket.on('sending message', (message) => {
         console.log('Message is received :', message);
         io.sockets.emit('new message', { message: ' ==> you said : ' + message });
+
         cpt++;
-        if (cpt != 6) {
+
+        if (cpt != 7) {
             io.sockets.emit('new message', { message: questionMap.get(cpt) });
 
         }
         console.log('Message send  :', { message: questionMap.get(cpt) }, ' cpt = ', cpt);
-
+        
         if (cpt == 1) {
             dataMap.set('birthname', message);
         }
 
         if (cpt == 2) {
-            dataMap.set('save', message);
-            if (dataMap.get('save') != "s"){
+            dataMap.set('save1', message);
+            if (dataMap.get('save1') != "s"){
                 cpt = 0;
+                console.log('Message send  : save1', cpt);
+               // cpt = 1;
             }
         }
 
@@ -81,9 +85,11 @@ io.sockets.on('connection', (socket) => {
         }
 
         if (cpt == 4) {
-            dataMap.set('save', message);
-            if (dataMap.get('save') != "s"){
+            dataMap.set('save2', message);
+            if (dataMap.get('save2') != "s"){
                 cpt = 2;
+                console.log('Message send  : save2', cpt);
+                //cpt = 3;
             }
           }
 
@@ -94,9 +100,10 @@ io.sockets.on('connection', (socket) => {
         }
 
         if (cpt == 6) {
-            dataMap.set('save', message);
-            if (dataMap.get('save') != "s"){
+            dataMap.set('save3', message);
+            if (dataMap.get('save3') != "s"){
                 cpt = 4;
+                console.log('Message send  : save3', cpt);
             }
             else{
                 asyncCall();
