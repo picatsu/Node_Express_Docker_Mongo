@@ -1,31 +1,33 @@
+import { watchFile } from "fs";
+
 const express = require('express');
 const path = require('path');
-const bodyParser = require('body-parser');
-
+const bodyParser = require('body-parser'),
+fetch   = require('node-fetch');
 
 
 const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io').listen(server);
 const PORT = 3000,
-    request = require('request'),
-    fetch = require('node-fetch');
+    request = require('request');
+
 server.listen(PORT);
 console.log('Server is running');
 const rp = require('request-promise');
-
+const shouldAdd = true;
 
 const connections = [];
 let questionMap = new Map();
 questionMap.set(0, ' Donne ton birthname');
 questionMap.set(1, ' Donne ton lastname');
 questionMap.set(2, ' Donne ton SSN');
-questionMap.set(3, ' Veux-tu sauvegarder');
 let cpt = 0;
 
 let dataMap = new Map();
 let serverResponse = '';
 
+let AllData = '';
 
 io.sockets.on('connection', (socket) => {
     connections.push(socket);
@@ -33,8 +35,19 @@ io.sockets.on('connection', (socket) => {
     io.sockets.emit('new message', { message: questionMap.get(cpt) });
 
 
+    socket.on('shouldAdd', (message ) => {
+       console.log('shouldADD ? ', message );
+    });
+
     socket.on('disconnect', () => {
         connections.splice(connections.indexOf(socket), 1);
+    });
+    socket.on('getAll', (message) => {
+        getAllData();
+       
+        io.sockets.emit('getAll', { message:  AllData }   );
+        console.log(' jai envoye toutes les donnees ', { message:  AllData });
+
     });
 
     socket.on('sending message', (message) => {
@@ -42,7 +55,7 @@ io.sockets.on('connection', (socket) => {
         io.sockets.emit('new message', { message: ' ==> you said : ' + message });
 
         cpt++;
-        if (cpt != 4) {
+        if (cpt != 3) {
             io.sockets.emit('new message', { message: questionMap.get(cpt) });
 
         }
@@ -58,13 +71,10 @@ io.sockets.on('connection', (socket) => {
 
         if (cpt == 3) {
             dataMap.set('ssn', message);
-        }
-        if (cpt == 4) {
-            dataMap.set('save', message);
-            if  (dataMap.get('save') == 'y'){
-              asyncCall();
-            }
-            cpt = 0;  
+            asyncCall();
+            cpt = 0;
+            
+            ///io.sockets.emit('new message', { message: questionMap.get(cpt) });
         }
 
 
@@ -79,7 +89,8 @@ function asyncCall() {
     let postData = {
         lastname: dataMap.get('birthname'),
         birthname: dataMap.get('lastname'),
-        ssn: dataMap.get('ssn')
+        ssn: dataMap.get('ssn'),
+        shouldAdd : shouldAdd,
     };
 
 
@@ -101,13 +112,12 @@ function asyncCall() {
         }
         else {
 
-            serverResponse = body;
             console.log('statusCode:',
-                response && response.statusCode, 'BODY ', serverResponse);
+                response && response.statusCode, 'BODY ', body);
 
             io.sockets.emit('new message', {
                 message:
-                    JSON.stringify(serverResponse)
+                    JSON.stringify(body)
             });
 
 
@@ -119,7 +129,18 @@ function asyncCall() {
 
 }
 
+function getAllData() {
+    let va = "";
+    fetch('http://localhost:3011/people/')
+    .then(res => res.json())
+    .then(data => {
+        AllData = JSON.stringify(data);
+        va = JSON.stringify(data);
+    });
+    return va;
+}
+app.use(express.static(__dirname + '/dist'));
 
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/index.html');
+    res.sendFile(__dirname + '/dist/index.html');
 });
