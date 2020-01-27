@@ -71,8 +71,8 @@ io.sockets.on('connection', (socket) => {
 
         if (cpt == 2) {
             dataMap.set('save', message);
-            if (dataMap.get('save') != 's'){
-                cpt = 1;
+            if (dataMap.get('save') != "s"){
+                cpt = 0;
             }
         }
 
@@ -82,8 +82,8 @@ io.sockets.on('connection', (socket) => {
 
         if (cpt == 4) {
             dataMap.set('save', message);
-            if (dataMap.get('save') != 's'){
-                cpt = 3;
+            if (dataMap.get('save') != "s"){
+                cpt = 2;
             }
           }
 
@@ -95,8 +95,8 @@ io.sockets.on('connection', (socket) => {
 
         if (cpt == 6) {
             dataMap.set('save', message);
-            if (dataMap.get('save') != 's'){
-                cpt = 5;
+            if (dataMap.get('save') != "s"){
+                cpt = 4;
             }
             else{
                 asyncCall();
