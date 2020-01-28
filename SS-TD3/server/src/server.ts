@@ -72,8 +72,8 @@ io.sockets.on('connection', (socket) => {
         }
         else if (cpt > 5 ){
             asyncCall();
-            cpt = -1;
             getAllData();
+            cpt = -2;
         }
 
         cpt++;
