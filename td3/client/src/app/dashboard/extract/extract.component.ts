@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild, ElementRef, HostListener } from '@angular/core';
 import { BuildServiceService } from '../services/build-service.service';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import * as io from 'socket.io-client';
@@ -19,16 +19,24 @@ export class ExtractComponent implements OnInit {
   private url = 'http://localhost:3000';
 
   @ViewChild('content', {static: true}) mymodal: ElementRef;
+  @ViewChild('content2', {static: true}) mymodal2: ElementRef;
 
   private socket; 
   tab = [];
   toogled = true;
   isChecked = true;
-
-
+  displayresult: boolean = false;
+  @HostListener('document:keydown', ['$event'])
+  onKeyDownHandler(event: KeyboardEvent) {
+    if (event.key === "Escape") {
+      this.close()
+    }
+  }
   constructor( private modalService: NgbModal ) {  
     this.socket = io(this.url);
     this.isChecked = true;
+
+    
 
   }
 
@@ -39,6 +47,9 @@ export class ExtractComponent implements OnInit {
     this.isChecked = !this.isChecked;
   }
   
+  closeResult2(){
+    this.modalService.dismissAll();
+  }
  
 
   public sendMessage() {
@@ -88,6 +99,15 @@ export class ExtractComponent implements OnInit {
  } 
 
 
+  getTypeText(mtext: string) {
+    if( mtext.includes('PLEASE GIVE') || mtext.includes('errors') || mtext.includes('ADDED SUCCESSFULLY')  ){
+     
+      return true;
+    }
+    else{
+      return false;
+    }
+ }
 
   toggleDarkTheme() {
     this.toogled = ! this.toogled;
@@ -99,7 +119,6 @@ export class ExtractComponent implements OnInit {
 
     });
     this.toogled = true;
-    console.log(" LLL", this.mymodal);
 
     this.open(this.mymodal);
   }
@@ -113,8 +132,12 @@ export class ExtractComponent implements OnInit {
     });
   }
 
- 
   
+
+
+  close() {
+    this.mymodal2.nativeElement.modal("hide");
+}
 
 
 }
