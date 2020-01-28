@@ -20,11 +20,11 @@ const shouldAdd = true;
 const connections = [];
 let questionMap = new Map();
 questionMap.set(0, ' Donne ton birthname');
-questionMap.set(1, ' Save : "y" or "n" ');
+questionMap.set(1, ' Pour ressaisir tapez : "n" ');
 questionMap.set(2, ' Donne ton lastname');
-questionMap.set(3, ' Save : "y" or "n" ');
+questionMap.set(3, ' Pour ressaisir tapez "n" ');
 questionMap.set(4, ' Donne ton SSN');
-questionMap.set(5, ' Save : "y" or "n" ');
+questionMap.set(5, ' Pour ressaisir tapez "n" ');
 
 let cpt = 0;
 
@@ -61,6 +61,21 @@ io.sockets.on('connection', (socket) => {
 
         io.sockets.emit('new message', { message: ' ==> you said : ' + message });
 
+        let retour  = message; 
+        console.log(' retour', retour);
+        console.log(' cpt', cpt);
+
+        if ( retour == "n" && cpt > 0 ){
+            console.log(' Avant save', cpt);
+            cpt = cpt-2;
+            console.log(' Save', cpt);
+        }
+        else if (cpt > 5 ){
+            asyncCall();
+            cpt = -1;
+            getAllData();
+        }
+
         cpt++;
 
         if (cpt != 6) {
@@ -75,11 +90,7 @@ io.sockets.on('connection', (socket) => {
         }
 
         if (cpt == 2) {
-            dataMap.set('save1', message);
-            if (dataMap.get('save1') != 'y'){
-                cpt = 0;
-                console.log('Message send  : save1', cpt);
-            }
+            dataMap.set('save', message);
         }
 
         if (cpt == 3) {
@@ -88,11 +99,7 @@ io.sockets.on('connection', (socket) => {
         }
 
         if (cpt == 4) {
-            dataMap.set('save2', message);
-            if (dataMap.get('save2') != 'y'){
-                cpt = 2;
-                console.log('Message send  : save2', cpt);
-            }
+            dataMap.set('save', message);
           }
 
         if (cpt == 5) {
@@ -103,22 +110,12 @@ io.sockets.on('connection', (socket) => {
         }
 
         if (cpt == 6) {
-            dataMap.set('save3', message);
-            if (dataMap.get('save3') != 'y'){
-                cpt = 4;
-                console.log('Message send  : save3', cpt);
-            }
-            else{
-                asyncCall();
-                cpt = 0;
-                getAllData();  
-            }
+            dataMap.set('save', message);
             ///io.sockets.emit('new message', { message: questionMap.get(cpt) });
         }
     });
 });
-
-
+ 
 function asyncCall() {
     let postData = {
         lastname: dataMap.get('birthname'),
