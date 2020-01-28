@@ -20,11 +20,11 @@ const shouldAdd = true;
 const connections = [];
 let questionMap = new Map();
 questionMap.set(0, ' Donne ton birthname');
-questionMap.set(1, ' Save : "s" or "n" ');
+questionMap.set(1, ' Save : "y" or "n" ');
 questionMap.set(2, ' Donne ton lastname');
-questionMap.set(3, ' Save : "s" or "n" ');
+questionMap.set(3, ' Save : "y" or "n" ');
 questionMap.set(4, ' Donne ton SSN');
-questionMap.set(5, ' Save : "s" or "n" ');
+questionMap.set(5, ' Save : "y" or "n" ');
 
 let cpt = 0;
 
@@ -36,6 +36,7 @@ getAllData();
 io.sockets.on('connection', (socket) => {
     connections.push(socket);
     console.log(' %s sockets is connected', connections.length);
+
     io.sockets.emit('new message', { message: questionMap.get(cpt) });
 
 
@@ -57,51 +58,53 @@ io.sockets.on('connection', (socket) => {
 
     socket.on('sending message', (message) => {
         console.log('Message is received :', message);
+
         io.sockets.emit('new message', { message: ' ==> you said : ' + message });
 
         cpt++;
 
-        if (cpt != 7) {
+        if (cpt != 6) {
+            console.log('Message send  : emit : ', cpt);
             io.sockets.emit('new message', { message: questionMap.get(cpt) });
-
         }
         console.log('Message send  :', { message: questionMap.get(cpt) }, ' cpt = ', cpt);
         
         if (cpt == 1) {
             dataMap.set('birthname', message);
+            console.log('Message send  : birthname', cpt);
         }
 
         if (cpt == 2) {
             dataMap.set('save1', message);
-            if (dataMap.get('save1') != "s"){
+            if (dataMap.get('save1') != 'y'){
                 cpt = 0;
                 console.log('Message send  : save1', cpt);
-               // cpt = 1;
             }
         }
 
         if (cpt == 3) {
           dataMap.set('lastname', message);
+          console.log('Message send  : lastname', cpt);
         }
 
         if (cpt == 4) {
             dataMap.set('save2', message);
-            if (dataMap.get('save2') != "s"){
+            if (dataMap.get('save2') != 'y'){
                 cpt = 2;
                 console.log('Message send  : save2', cpt);
-                //cpt = 3;
             }
           }
 
         if (cpt == 5) {
             dataMap.set('ssn', message);
+            console.log('Message send  : ssn', cpt);
             
             ///io.sockets.emit('new message', { message: questionMap.get(cpt) });
         }
 
         if (cpt == 6) {
             dataMap.set('save3', message);
-            if (dataMap.get('save3') != "s"){
+            if (dataMap.get('save3') != 'y'){
                 cpt = 4;
                 console.log('Message send  : save3', cpt);
             }
