@@ -4,6 +4,7 @@ import { map } from "rxjs/operators";
 import { Observable } from 'rxjs';
 
 import * as io from 'socket.io-client';
+import { HttpClient } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
@@ -12,10 +13,12 @@ export class BuildServiceService {
   private url = 'http://localhost:3000';
     
   private socket; 
-  
 
+  
   constructor() {
   }
+
+  
 
 
 

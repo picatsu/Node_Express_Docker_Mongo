@@ -8,6 +8,8 @@ Yassine JAA
 
 <h1>TD3 Socket.IO<h1>
 
+<h3>Il est conseillé d'utiliser le navigateur Chrome version  50.65.4 </h3>
+
 <h3> En lançant son navigateur sur l’adresse de votre API, une page contenant un chat vous dit : </h3>
 
 <li>1- Quel est votre nom ?</li>
