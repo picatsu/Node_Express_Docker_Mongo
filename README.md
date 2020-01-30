@@ -6,6 +6,8 @@ Melvin JESIOLWSKI
 Yassine JAA
 </p>
 
+<h1>TD3 Socket.IO<h1>
+
 <h3> En lançant son navigateur sur l’adresse de votre API, une page contenant un chat vous dit : </h3>
 
 <li>- Quel est votre nom ?</li>
@@ -45,8 +47,8 @@ Yassine JAA
 <br></br>
 ![Alt text](BDD.PNG?raw=true "On Start")
 
+<h2>RUN PROJET </h2>
 <h3> TO RUN server TD3 WITH ANGULAR FRONT  : </h3>
-<p> SINON je recommande d'ouvrir 2 git bash puis </li>
 
 ```javascript
 cd ../td3/client   
