@@ -75,16 +75,10 @@ io.sockets.on('connection', (socket) => {
             dataMap.set('ssn', message);
             asyncCall();
             cpt = 0;
-            
             getAllData();
             
             ///io.sockets.emit('new message', { message: questionMap.get(cpt) });
         }
-
-
-
-
-
     });
 });
 
@@ -143,8 +137,8 @@ function getAllData() {
     });
     return va;
 }
-app.use(express.static(__dirname + '/dist'));
 
+app.use(express.static(__dirname + '/dist'));
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/dist/index.html');
 });

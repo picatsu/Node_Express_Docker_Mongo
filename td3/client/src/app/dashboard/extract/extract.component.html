@@ -51,11 +51,144 @@
 
   <mat-slide-toggle labelPosition="before" (change)="shouldADD()">Save ? {{isChecked}}</mat-slide-toggle>
 
-  <div class="scrollBarClass">
+
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+<br><br>
+  <div style="width: inherit;"  >
+
+
+
+    
+      <div style="max-height: 500px; overflow-y:scroll;" #scrollMe  >
+        <!-- DIRECT CHAT PRIMARY -->
+        <div class="box box-primary direct-chat direct-chat-primary">
+
+
+          <div class="box-header with-border">
+            <h3 class="box-title">Direct Chat</h3>
+      
+            <div class="box-tools pull-right">
+              <span data-toggle="tooltip" title="" class="badge bg-light-blue" data-original-title="3 New Messages">{{messages.length}}</span>
+              <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+              </button>
+              <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="Contacts" data-widget="chat-pane-toggle">
+                <i class="fa fa-comments"></i></button>
+              <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+            </div>
+          </div>
+          <!-- /.box-header -->
+          <div class="box-body">
+            <!-- Conversations are loaded here -->
+            <div class="direct-chat-messages" *ngFor="let message of messages" style="height: fit-content;" >
+              <!-- Message. Default to the left -->
+
+             
+              <div
+              [ngClass]="{
+                'direct-chat-msg': message.server === true  , 
+                'direct-chat-msg right': message.server === false }"
+              >
+
+
+                <div class="direct-chat-info clearfix">
+
+                  <span *ngIf="message.server == true"  class="direct-chat-name pull-left" style="color:red">Server  &nbsp;
+                    <span class="direct-chat-timestamp pull-right" >{{ message.date | date:'medium' }}</span>
+                  </span>
+                  <span *ngIf="message.server == false" class="direct-chat-name pull-right" style="color:blue">Client &nbsp;
+                    <span class="direct-chat-timestamp pull-right" >{{ message.date | date:'medium' }}</span> 
+                  </span>
+                  
+                </div>
+                <!-- /.direct-chat-info -->
+                <img class="direct-chat-img"  alt="Message User Image"  *ngIf="message.server == true" src="https://bootdey.com/img/Content/user_2.jpg" slot="start" />
+                <img class="direct-chat-img" alt="Message User Image"  *ngIf="message.server == false" src="https://bootdey.com/img/Content/user_1.jpg" slot="start" />
+
+                <div class="direct-chat-text">
+                {{ message.serverMessage}}
+                </div>
+                <!-- /.direct-chat-text -->
+              </div>
+              <!-- /.direct-chat-msg -->
+      
+              <!-- Message to the right -->
+
+
+
+
+           
+
+
+              
+              <!-- /.direct-chat-msg -->
+            </div>
+            <!--/.direct-chat-messages-->
+      
+            <!-- Contacts are loaded here -->
+            <div class="direct-chat-contacts">
+              <ul class="contacts-list">
+                <li>
+                  <a href="#">
+                    <img class="contacts-list-img" src="https://bootdey.com/img/Content/user_1.jpg">
+      
+                    <div class="contacts-list-info">
+                          <span class="contacts-list-name">
+                            Count Dracula
+                            <small class="contacts-list-date pull-right">2/28/2015</small>
+                          </span>
+                      <span class="contacts-list-msg">How have you been? I was...</span>
+                    </div>
+                    <!-- /.contacts-list-info -->
+                  </a>
+                </li>
+                <!-- End Contact Item -->
+              </ul>
+              <!-- /.contatcts-list -->
+            </div>
+            <!-- /.direct-chat-pane -->
+          </div>
+
+        
+
+
+          <!-- /.box-body -->
+          <div class="box-footer">
+            <form action="#" method="post">
+              <div class="input-group">
+                <input type="text" name="message" placeholder="Type Message ..." class="form-control" (keydown.enter)="sendMessage()"  [(ngModel)]="message" >
+                    <span class="input-group-btn">
+                      <button type="submit" class="btn btn-primary btn-flat" (click)="sendMessage()" >Send</button>
+                    </span>
+              </div>
+            </form>
+          </div>
+          <!-- /.box-footer-->
+        </div>
+        <!--/.direct-chat -->
+      </div>
+      
+      
+      
+      
+  
+  
+   
+  </div>
+<!-- -->
+  <div class="scrollBarClass" style="width: 600px;">
     <div *ngFor="let message of messages.reverse()">
+      <!-- 
+      <div class="speech-bubble-ds">
+        <p><strong>Demo speech bubble</strong></p>
+        <p>This is CSS speech bubble with borders and drop shadow.</p>
+        <div class="speech-bubble-ds-arrow"></div>
+    </div>
+
+    
       <div role="alert" [ngClass]="{
       'alert alert-danger': message.server ===  null,
-      'alert alert-primary': message.server === true  , 
+      'speech-bubble': message.server === true  , 
       'alert alert-secondary': message.server === false }">
         {{message.serverMessage}}
 
@@ -66,13 +199,15 @@
     </div>
   </div>
   <input type="text" class="form-control" (keydown.enter)="sendMessage()" aria-describedby="addon-wrapping"
-    [(ngModel)]="message">
+    [(ngModel)]="message" style="width: 600px;" placeholder="Repondre">
   <br><br>
 
 
   <button type="button" class="btn btn-primary" (click)="sendMessage()">Send </button>
 
-
+  -->
+  </div>
+  </div>
   <br>
 
   <br>

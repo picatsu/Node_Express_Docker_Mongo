@@ -60,11 +60,6 @@ io.sockets.on('connection', (socket) => {
             asyncCall();
             cpt = 0;
         }
-
-
-
-
-
     });
 });
 
