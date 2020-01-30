@@ -10,12 +10,15 @@ Yassine JAA
 
 <h3> En lançant son navigateur sur l’adresse de votre API, une page contenant un chat vous dit : </h3>
 
-<li>- Quel est votre nom ?</li>
-<li>- Quel est votre prénom ?</li>
-<li>- Quel est votre SNN?</li>
-<br></br>
+<li>1- Quel est votre nom ?</li>
+<li>2- Quel est votre prénom ?</li>
+<li>3- Quel est votre SNN ?</li>
+
+<br>
+
 <li>Un choix et proposé d’enregistrer les informations las la BDD</li>
 <li>L'utilisateur peut supprimer les documents à partir de l'interface</li>
+<li>Affiche des documents present dans la base de données</li>
 
 <h3> Technologies : </h3>
 
@@ -40,11 +43,17 @@ Yassine JAA
 <li>Affichage du contenu de la base de données </li>
 <li>recherche dans base de données</li>
 
-<br></br>
+<br>
+<h3>PHOTO Chat : </h3>
+
 ![Alt text](Chat.PNG?raw=true "On Start")
 <br></br>
+<h3>PHOTO Recherche : </h3>
+
 ![Alt text](Recherche.PNG?raw=true "On Start")
 <br></br>
+<h3>PHOTO Base de données : </h3>
+
 ![Alt text](BDD.PNG?raw=true "On Start")
 
 <h2>RUN PROJET </h2>
