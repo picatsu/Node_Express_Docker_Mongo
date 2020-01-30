@@ -30,26 +30,31 @@
 
 <h3> TO RUN server TD3 WITH ANGULAR FRONT  : </h3>
 <p> SINON je recommande d'ouvrir 2 git bash puis </li>
-'''javascript
-cd td3/client   
+
+```javascript
+cd ../td3/client   
 npm install 
-ng serve 
-'''
+npm start
+```
+
 <br></br>
-'''javascript
-cd td3/server 
+
+```javascript
+cd ../td3/server 
 npm install 
-npm run dev 
-'''
+npm start dev 
+```
+
 <br></br>
 
 <h3> TO RUN server TD2 : </h3>
 
-'''javascript
-cd ../SS-TD2/ 
+```javascript
+cd ../td2/ 
 npm install 
 npm start
-'''
+```
+
 
 
 
