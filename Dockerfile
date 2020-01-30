@@ -6,7 +6,7 @@ RUN apt-get update -yq \
 && apt-get install nodejs -yq \
 && apt-get clean -y
 
-ADD . /td2/
+ADD /td2/
 WORKDIR /td2
 RUN npm install
 
