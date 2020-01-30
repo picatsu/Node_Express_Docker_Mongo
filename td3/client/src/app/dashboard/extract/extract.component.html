@@ -47,12 +47,12 @@
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 
 <br><br>
-  <div style="width: inherit;"  >
+  <div style="width: inherit; border: lightblue;"  >
 
 
 
     
-      <div style="max-height: 500px; overflow-y:scroll;" #scrollMe  >
+      <div style="max-height: 400px; overflow-y:scroll;" #scrollMe  >
         <!-- DIRECT CHAT PRIMARY -->
         <div class="box box-primary direct-chat direct-chat-primary">
 
@@ -83,7 +83,7 @@
               >
 
 
-                <div class="direct-chat-info clearfix">
+                <div class="direct-chat-info clearfix" >
 
                   <span *ngIf="message.server == true"  class="direct-chat-name pull-left" style="color:red">Server  &nbsp;
                     <span class="direct-chat-timestamp pull-right" >{{ message.date | date:'medium' }}</span>
@@ -97,7 +97,7 @@
                 <img class="direct-chat-img"  alt="Message User Image"  *ngIf="message.server == true" src="https://bootdey.com/img/Content/user_2.jpg" slot="start" />
                 <img class="direct-chat-img" alt="Message User Image"  *ngIf="message.server == false" src="https://bootdey.com/img/Content/user_1.jpg" slot="start" />
 
-                <div class="direct-chat-text"  >
+                <div class="direct-chat-text"   >
                 {{ message.serverMessage}}
                    
                 </div>
@@ -237,7 +237,7 @@
         <th scope="row"> <span class="badge badge-primary" [ngStyle]="{'font-size.px':15}"
             (click)="open(content, item.Build )"> {{item._id}} </span></th>
         <td>{{item.lastname}}</td>
-        <td> <a href="https://google.fr" target="_blank" class="badge badge-pill badge-light">{{item.birthname}}</a>
+        <td> <a  target="_blank" class="badge badge-pill badge-light">{{item.birthname}}</a>
         </td>
         <td [ngClass]="{'text-danger': item.Branche === 'RELEASE'}">{{item.ssn}}</td>
         <td>{{item.commune}}</td>

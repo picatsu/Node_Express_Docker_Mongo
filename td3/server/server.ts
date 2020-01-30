@@ -155,7 +155,7 @@ function asyncCallDelete(ssn: string) {
 
 
     const clientServerOptions = {
-        uri: 'hhttp://localhost:3011/peoplebyssn/'+ssn,
+        uri: 'http://localhost:3011/peoplebyssn/'+ssn,
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json'
@@ -165,7 +165,7 @@ function asyncCallDelete(ssn: string) {
     };
 
     console.log(' client ServerOptions : ', clientServerOptions);
-    
+
     request(clientServerOptions, function (error, response, body) {
         if (error != null) {
             console.log('error:', error);
