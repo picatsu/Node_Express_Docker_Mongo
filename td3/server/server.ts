@@ -117,7 +117,10 @@ function asyncCall() {
                 message:
                     JSON.stringify(body)
             });
-
+            io.sockets.emit('new message', {
+                message:
+                'Donne ton birthname'
+            });
 
         }
 

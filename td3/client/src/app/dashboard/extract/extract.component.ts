@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef, ViewChild, ElementRef, HostListener, AfterViewInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild, ElementRef, HostListener, AfterViewInit, AfterViewChecked } from '@angular/core';
 import { BuildServiceService } from '../services/build-service.service';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import * as io from 'socket.io-client';
@@ -21,7 +21,6 @@ export class ExtractComponent implements OnInit, AfterViewChecked  {
   now: Date = new Date();
   private url = 'http://localhost:3000';
   @ViewChild('scrollMe', {static: true}) private myScrollContainer: ElementRef;
-
   @ViewChild('content', {static: true}) mymodal: ElementRef;
   @ViewChild('content2', {static: true}) mymodal2: ElementRef;
 
@@ -43,12 +42,10 @@ export class ExtractComponent implements OnInit, AfterViewChecked  {
 
   }
 
-  imageserver:any = '';
-  imageclient: any = '';
+  
  
   
   shouldADD() {
-    console.log('activé ?');
     this.socket.emit('shouldAdd', this.isChecked);
     this.isChecked = !this.isChecked;
   }
@@ -71,13 +68,24 @@ scrollToBottom(): void {
    this.socket.emit('getAll', 'HELLO');
    this.socket.on('getAll', (message) => {
     this.tab = JSON.parse(message.message);
-    console.log('tableau ', this.tab);
   });
    this.socket.emit('sending message', this.message);
+   //this.socket.on('sending message', this.message);
+   console.log('sendMessage() => ', this.message );
    this.message = '';
+  
+  }
+  clearChat(){
+    this.messages.splice(0,this.messages.length);
+    this.messages.push({
+      server: true,
+      serverMessage: 'Donne ton',
+      date: new Date()
+  
+    });
   }
   fillMessages(msg: any) {
-    console.log('fill ', msg.message);
+    console.log('fillMessages() => ', msg.message);
 
     if(msg.message.includes('==>')) {
       this.messages.push({
@@ -103,13 +111,12 @@ scrollToBottom(): void {
      //  .fromEvent("new message") ;
      return Observable.create((observer) => {
        this.socket.on('new message', (message) => {
-         this.fillMessages(message);
            observer.next(message);
+           console.log('getMessage() => ', message);
        });
        this.socket.emit('getAll', 'HELLO');
        this.socket.on('getAll', (message) => {
         this.tab = JSON.parse(message.message);
-        console.log('tableau ', this.tab);
       });
    });
 
@@ -133,6 +140,7 @@ scrollToBottom(): void {
   ngOnInit() {
     this.getMessage().subscribe((message: string) => {
      // this.messages.push(message);
+     this.fillMessages(message);
 
     });
     this.toogled = true;
