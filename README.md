@@ -1,6 +1,10 @@
-<p>Achraf LAHKIKY</p>
-<p>Melvin JESIOLWSKI</p>
-<p>Yassine JAA</p>
+<p>
+Achraf LAHKIKY
+<br>
+Melvin JESIOLWSKI
+<br>
+Yassine JAA
+</p>
 
 <h3> En lançant son navigateur sur l’adresse de votre API, une page contenant un chat vous dit : </h3>
 
@@ -34,7 +38,12 @@
 <li>Affichage du contenu de la base de données </li>
 <li>recherche dans base de données</li>
 
-![Alt text](capture.PNG?raw=true "On Start")
+<br></br>
+![Alt text](chat.PNG?raw=true "On Start")
+<br></br>
+![Alt text](Recherche.PNG?raw=true "On Start")
+<br></br>
+![Alt text](BDD.PNG?raw=true "On Start")
 
 <h3> TO RUN server TD3 WITH ANGULAR FRONT  : </h3>
 <p> SINON je recommande d'ouvrir 2 git bash puis </li>
@@ -59,7 +68,8 @@ npm install
 npm start
 ```
 <p>Exemple de SNN pour les tests</p>
-```
+
+```javascript
 177023523800522
 ```
 
