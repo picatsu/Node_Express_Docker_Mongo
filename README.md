@@ -2,6 +2,14 @@
 <p>Melvin JESIOLWSKI</p>
 <p>Yassine DIARRA</p>
 
+<h3>En lançant son navigateur sur l’adresse de votre API, une page contenant un chat vous dit : </h3>
+<li>- Quel est votre nom ?</li>
+<li>- Quel est votre prénom ?</li>
+<li>- Quel est votre SNN?</li>
+<br></br>
+<li>Un choix et proposé d’enregistrer les informations las la BDD</li>
+
+
 <h3> Fonctionnalités : </h3>
 
 <li> Verification du SSN </li>
@@ -21,36 +29,27 @@
 
 
 <h3> TO RUN server TD3 WITH ANGULAR FRONT  : </h3>
-
-<ul>
 <p> SINON je recommande d'ouvrir 2 git bash puis </li>
-<li> cd client </li>
-<li> npm install </li>
-<li> ng serve </li>
-
-<li> cd ../server </li>
-<li> npm install </li>
-<li> npm run dev </li>
-
-</ul>
-
+'''javascript
+cd td3/client   
+npm install 
+ng serve 
+'''
+<br></br>
+'''javascript
+cd td3/server 
+npm install 
+npm run dev 
+'''
+<br></br>
 
 <h3> TO RUN server TD2 : </h3>
 
-<ul>
-<li> cd ../SS-TD2/ </li>
-<li> npm install </li>
-<li> npm start </li>
-
-
-</ul>
-
-
-<h3>finally RUN server TD3 DE BASE :</h3>
-
-<li>cd ../Source_Code_Prof/</li>
-<li>npm install</li>
-<li>npm start</li>
+'''javascript
+cd ../SS-TD2/ 
+npm install 
+npm start
+'''
 
 
 
