@@ -35,10 +35,14 @@ io.sockets.on('connection', (socket) => {
     cpt=0;
     io.sockets.emit('new message', { message: questionMap.get(cpt) });
 
+    socket.on('deleteLigne', (message ) => {
+        asyncCallDelete(message);
+       console.log('row deleted ? ', message );
+    });
 
     socket.on('shouldAdd', (message ) => {
-       console.log('shouldADD ? ', message );
-    });
+        console.log('shouldADD ? ', message );
+     });
 
     socket.on('disconnect', () => {
         connections.splice(connections.indexOf(socket), 1);
@@ -122,6 +126,8 @@ function asyncCall() {
                 'Donne ton birthname'
             });
 
+            getAllData();
+
         }
 
     });
@@ -140,6 +146,51 @@ function getAllData() {
     });
     return va;
 }
+
+
+
+function asyncCallDelete(ssn: string) {
+    
+
+
+
+    const clientServerOptions = {
+        uri: 'hhttp://localhost:3011/peoplebyssn/'+ssn,
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        json: true // Automatically stringifies the body to JSON
+
+    };
+
+    console.log(' client ServerOptions : ', clientServerOptions);
+    
+    request(clientServerOptions, function (error, response, body) {
+        if (error != null) {
+            console.log('error:', error);
+        }
+        else {
+
+            console.log('statusCode:',
+                response && response.statusCode, 'BODY ', body);
+
+            io.sockets.emit('deleteLigne', {
+                message:
+                    JSON.stringify(body)
+            });
+           
+
+            getAllData();
+
+        }
+
+    });
+
+
+
+}
+
 
 app.use(express.static(__dirname + '/dist'));
 app.get('/', (req, res) => {

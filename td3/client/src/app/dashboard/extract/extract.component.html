@@ -22,26 +22,18 @@
   </ng-template>
 
 
-
-
-  <ng-template #content2 let-modal2 *ngIf="displayresult">
+  <ng-template #content2 let-modal2  >
     <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title"> TEST </h4>
+      <h4 class="modal-title">Modal title</h4>
       <button type="button" class="close" aria-label="Close" (click)="modal2.dismiss('Cross click')">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
     <div class="modal-body">
-      <form>
-        <div class="form-group">
-
-         DDDDDD
-
-        </div>
-      </form>
+      <p>One fine body&hellip;</p>
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-outline-dark" (click)="closeResult2()">Exit</button>
+      <button type="button" class="btn btn-light" (click)="modal2.close('Close click')">Close</button>
     </div>
   </ng-template>
 
@@ -105,8 +97,9 @@
                 <img class="direct-chat-img"  alt="Message User Image"  *ngIf="message.server == true" src="https://bootdey.com/img/Content/user_2.jpg" slot="start" />
                 <img class="direct-chat-img" alt="Message User Image"  *ngIf="message.server == false" src="https://bootdey.com/img/Content/user_1.jpg" slot="start" />
 
-                <div class="direct-chat-text">
+                <div class="direct-chat-text"  >
                 {{ message.serverMessage}}
+                   
                 </div>
                 <!-- /.direct-chat-text -->
               </div>
@@ -216,7 +209,7 @@
 
   <br>
   <input type="text" id="input3-group2" [(ngModel)]="searchKeyword" name="input3-group2" class="form-control mr-sm-2"
-    placeholder="Rechercher">
+    placeholder="Rechercher dans la table ">
 
 
   <br>
@@ -234,6 +227,7 @@
         <th>Departement</th>
         <th>Pays</th>
         <th>Naissance</th>
+        <th>Delete</th>
 
 
       </tr>
@@ -251,8 +245,7 @@
         <td> <span class="badge badge-light" [ngStyle]="{'font-size.px':15}"> {{item.pays}} </span> </td>
         <td> <span class="badge badge-success" [ngStyle]="{'font-size.px':15}"> {{item.naissance}} </span> </td>
 
-
-
+        <button type="button" class="btn btn-outline-danger" (click)="deleteRow(item.ssn)">Danger</button>
       </tr>
 
 

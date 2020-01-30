@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef, ViewChild, ElementRef, HostListener, AfterViewInit, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild, ElementRef, HostListener, AfterViewInit, AfterViewChecked, Input } from '@angular/core';
 import { BuildServiceService } from '../services/build-service.service';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import * as io from 'socket.io-client';
@@ -6,8 +6,34 @@ import { Observable } from 'rxjs';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import { Message } from './message';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { DatePipe } from '@angular/common';
+
+
+@Component({
+  selector: 'ngbd-modal-content',
+  template: `
+    <div class="modal-header">
+      <h4 class="modal-title">Hi there!</h4>
+      <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p>Hello, {{name}}!</p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
+    </div>
+  `
+})
+export class NgbdModalContent {
+  @Input() name;
+
+  constructor(public activeModal: NgbActiveModal) {}
+}
+
 
 @Component({
   selector: 'td-extract',
@@ -36,6 +62,8 @@ export class ExtractComponent implements OnInit, AfterViewChecked  {
       this.close()
     }
   }
+
+
   constructor( private modalService: NgbModal ) {  
     this.socket = io(this.url);
     this.isChecked = true;
@@ -59,6 +87,8 @@ ngAfterViewChecked() {
     this.scrollToBottom();        
 } 
 
+
+
 scrollToBottom(): void {
     try {
         this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
@@ -78,12 +108,15 @@ scrollToBottom(): void {
   clearChat(){
     this.messages.splice(0,this.messages.length);
     this.messages.push({
-      server: true,
-      serverMessage: 'Donne ton',
+      server: false,
+      serverMessage: 'Donne ton birthname',
       date: new Date()
   
     });
+
   }
+
+
   fillMessages(msg: any) {
     console.log('fillMessages() => ', msg.message);
 
@@ -103,8 +136,27 @@ scrollToBottom(): void {
     
       });
     }
+
+    this.updateTable();
+  
   }
 
+  deleteRow(ssn: string){
+  this.socket.emit('deleteLigne', ssn);
+    this.socket.on('deleteLigne', (message) => {
+     /// AFFICHAGE TOAST 
+   });
+   
+   console.log('je supprime sa :', ssn);
+   this.updateTable();
+  }
+
+  updateTable(){
+    this.socket.emit('getAll', 'HELLO');
+    this.socket.on('getAll', (message) => {
+    this.tab = JSON.parse(message.message);
+   });
+  }
  
  getMessage() {
    //return this.socket
@@ -123,10 +175,12 @@ scrollToBottom(): void {
  } 
 
 
-  getTypeText(mtext: string) {
+  getTypeText(mtext: string): boolean {
     if( mtext.includes('PLEASE GIVE') || mtext.includes('errors') || mtext.includes('ADDED SUCCESSFULLY') || mtext.includes('ECONNREFUSED')  ){
       // console.log('mtext', mtext);
-      return true;
+      this.displayresult= true;
+      this.modalService.open(this.mymodal2, { size: 'xl' });
+        return true;
     }
     else{
       return false;
@@ -135,6 +189,10 @@ scrollToBottom(): void {
 
   toggleDarkTheme() {
     this.toogled = ! this.toogled;
+  }
+
+  openXl(content) {
+    this.modalService.open(this.mymodal2, { size: 'xl' });
   }
 
   ngOnInit() {
