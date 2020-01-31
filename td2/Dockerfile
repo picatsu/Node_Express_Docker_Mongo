@@ -1,6 +1,8 @@
 FROM node:10.15.3
 
 # Create app directory
+RUN git clone https://github.com/picatsu/Node_Express_Docker_Mongo.git
+RUN cd Node_Express_Docker_Mongo/td2
 COPY . /app
 
 # Install app dependencies
