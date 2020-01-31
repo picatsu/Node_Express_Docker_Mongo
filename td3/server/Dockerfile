@@ -13,4 +13,4 @@ RUN npm install
 # RUN npm ci --only=production
 
 EXPOSE 3010
-CMD [ "node", "server.js" ]
+CMD npm run start

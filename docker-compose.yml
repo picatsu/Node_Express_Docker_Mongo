@@ -1,13 +1,9 @@
 version: '3.7'
-services: 
-  tchat:
-    build:
-      context: './td3'
-    container_name: td3chat_web
+services:
+  db:
+    image: mongo:latest
     ports:
-      - "3010:3010" 
-    depends_on:
-      - api_td2
+      - "27017:27017"
   api_td2:
     build:
       context: './td2'
@@ -16,7 +12,12 @@ services:
       - "3011:3011"
     depends_on:
       - db
-  db:
-    image: mongo:latest
+  tchat:
+    build:
+      context: './td3/server'
+    container_name: td3chat_web
     ports:
-      - "27017:27017"
+      - "3010:3010" 
+    depends_on:
+      - api_td2
+
