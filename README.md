@@ -9,9 +9,9 @@ Yassine JAA
 <h1>TD3 Socket.IO<h1>
 <li> Td2: docker pull ezzefiohez/technologtd2 </li>
 <li> Td3: docker pull ezzefiohez/technologtd3  </li>
-<p>https://hub.docker.com/r/ezzefiohez/technologtd2 </p>
-<h3>Il est conseillé d'utiliser le navigateur Chrome version  50.65.4 </h3>
 
+<h3>Il est conseillé d'utiliser le navigateur Chrome version  50.65.4 </h3>
+<p>https://hub.docker.com/r/ezzefiohez/technologtd2</p>
 <h3> En lançant son navigateur sur l’adresse de votre API, une page contenant un chat vous dit : </h3>
 
 <li>1- Quel est votre nom ?</li>
@@ -77,7 +77,7 @@ Yassine JAA
 
 <h3>PHOTO Chat : </h3>
 
-![Alt text](./assets/Chat.PNG?raw=true "On Start")
+![Alt text](./assets/chat.PNG?raw=true "On Start")
 <br></br>
 <h3>Affichage donnée avec filtre </h3>
 
