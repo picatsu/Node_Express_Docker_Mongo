@@ -124,6 +124,9 @@ function asyncCall() {
         }
 
     });
+
+
+
 }
 
 function getAllData() {
