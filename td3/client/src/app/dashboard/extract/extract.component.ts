@@ -53,7 +53,7 @@ export class ExtractComponent implements OnInit, AfterViewChecked  {
   private socket; 
   tab = [];
   toogled = true;
-  isChecked = true;
+  isChecked: boolean;
   searchKeyword: any;
   displayresult: boolean = false;
   @HostListener('document:keydown', ['$event'])
@@ -74,8 +74,9 @@ export class ExtractComponent implements OnInit, AfterViewChecked  {
  
   
   shouldADD() {
-    this.socket.emit('shouldAdd', this.isChecked);
     this.isChecked = !this.isChecked;
+
+    this.socket.emit('shouldAdd', this.isChecked);
   }
   
   closeResult2(){
