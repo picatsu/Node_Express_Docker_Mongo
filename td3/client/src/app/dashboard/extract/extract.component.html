@@ -237,7 +237,7 @@
         <th scope="row"> <span class="badge badge-primary" [ngStyle]="{'font-size.px':15}"
             (click)="open(content, item.Build )"> {{item._id}} </span></th>
         <td>{{item.lastname}}</td>
-        <td> <a  target="_blank" class="badge badge-pill badge-light">{{item.birthname}}</a>
+        <td> {{item.birthname}}
         </td>
         <td [ngClass]="{'text-danger': item.Branche === 'RELEASE'}">{{item.ssn}}</td>
         <td>{{item.commune}}</td>
