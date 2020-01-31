@@ -4,7 +4,6 @@ services:
     image: mongo:latest
     ports:
       - "27017:27017"
-<<<<<<< HEAD
   api_td2:
     build:
       context: './td2'
@@ -21,20 +20,4 @@ services:
       - "3010:3010" 
     depends_on:
       - api_td2
-=======
-  td2:
-    build:
-      context: './td2'
-    container_name: 'td2'
-    ports: 
-      - "3000:3000"
-    depends_on:
-      - db
-  td3:
-    build:
-      context: './td3/server'
-    container_name: 'td3'  
-    ports:
-      - "4000:4000" 
->>>>>>> origin
 
