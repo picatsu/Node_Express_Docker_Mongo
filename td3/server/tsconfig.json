@@ -3,8 +3,8 @@
       "target": "es6",
       "module": "commonjs",
       "allowJs": true,
-      "outDir": "./build",
-      "rootDir": "./src",
+      "outDir": ".",
+      "rootDir": ".",
       "moduleResolution": "node",
       "esModuleInterop": true
     },

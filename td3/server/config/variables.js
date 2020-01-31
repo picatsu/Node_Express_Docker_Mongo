@@ -1,5 +1,6 @@
-export const environment = {
-  production: true,
+
+
+module.exports = {
   PORT: 4000,
   URLTD2: 'https://geo.api.gouv.fr',
   urlMongo: 'db',

@@ -11,8 +11,8 @@ const express = require('express'),
     request = require('request'),
     myRessource = require('../ressources/function'),
     app = express(),
-
-    url = "mongodb://localhost:27017/test",
+    ENV = require('../config/variables'),
+    url = "mongodb://"+ENV.urlMongo+":27017/test",
     database = mongoose.connect(url, {
         promiseLibrary: require('bluebird'),
         useNewUrlParser: true,
@@ -29,7 +29,7 @@ const express = require('express'),
                 contact: {
                     name: "Amazing Developer NODEJS"
                 },
-                servers: ["http://localhost:3011"]
+                servers: ["http://"+ENV.urlApiTd2+":"+ENV.PORT]
             }
         },
 

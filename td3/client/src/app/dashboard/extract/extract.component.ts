@@ -11,6 +11,7 @@ import { Angular5Csv } from 'angular5-csv/dist/Angular5-csv';
 import { ToastrService } from 'ngx-toastr';
 
 import { DatePipe } from '@angular/common';
+import { environment } from '../../../environments/environment';
 
 
 
@@ -24,7 +25,7 @@ export class ExtractComponent implements OnInit, AfterViewChecked  {
   message: string;
   messages: Message[] = [];
   now: Date = new Date();
-  private url = 'http://localhost:3000';
+  private url = 'http://'+environment.urlApiTd3+':'+environment.PORT;
   @ViewChild('scrollMe', {static: true}) private myScrollContainer: ElementRef;
   @ViewChild('content', {static: true}) mymodal: ElementRef;
   @ViewChild('content2', {static: true}) mymodal2: ElementRef;
