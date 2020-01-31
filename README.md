@@ -7,7 +7,9 @@ Yassine JAA
 </p>
 
 <h1>TD3 Socket.IO<h1>
-
+<li> Td2: docker pull ezzefiohez/technologtd2 </li>
+<li> Td3: docker pull ezzefiohez/technologtd3  </li>
+<p>https://hub.docker.com/r/ezzefiohez/technologtd2 </p>
 <h3>Il est conseillé d'utiliser le navigateur Chrome version  50.65.4 </h3>
 
 <h3> En lançant son navigateur sur l’adresse de votre API, une page contenant un chat vous dit : </h3>
@@ -15,6 +17,22 @@ Yassine JAA
 <li>1- Quel est votre nom ?</li>
 <li>2- Quel est votre prénom ?</li>
 <li>3- Quel est votre SNN ?</li>
+
+
+<br>
+
+<li>Un choix et proposé d’enregistrer les informations las la BDD</li>
+<li>L'utilisateur peut supprimer les documents à partir de l'interface</li>
+<li>Affiche des documents present dans la base de données</li>
+
+<h3> Technologies : </h3>
+
+<li>Node.js/ExpressJs</li>
+<li>Angular</li>
+<li>RestApi</li>
+<li>MongoDB</li>
+<li>Docker</li>
+<li>SocketIO</li>
 
     
     ├── td2                 # API du TP2 : Only HTTP with MongoDB
@@ -35,22 +53,6 @@ Yassine JAA
             └── package.json          
                      
     
-<br>
-
-<li>Un choix et proposé d’enregistrer les informations las la BDD</li>
-<li>L'utilisateur peut supprimer les documents à partir de l'interface</li>
-<li>Affiche des documents present dans la base de données</li>
-
-<h3> Technologies : </h3>
-
-<li>Node.js/ExpressJs</li>
-<li>Angular</li>
-<li>RestApi</li>
-<li>MongoDB</li>
-<li>Docker</li>
-<li>SocketIO</li>
-
-
 
 <h3> Fonctionnalités TD2 : </h3>
 
@@ -98,10 +100,6 @@ Yassine JAA
         <p> Tips for LocalMode: chmod +777 launchLocal.sh && ./launchLocal.sh</p>
         <p> Chat Marche Beaucoup Mieux en Locale </p>
 
-
-<h2>IMAGE DOCKER</h2>
-
-<H1>A ajouter</h1>
 
 <h2>RUN PROJET </h2>
 <h3> TO RUN server TD3 WITH ANGULAR FRONT  : </h3>
