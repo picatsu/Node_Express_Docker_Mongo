@@ -77,6 +77,8 @@ scrollToBottom(): void {
     } catch(err) { }                 
 }
   public sendMessage() {
+    console.log('AFFICHAGE ANGULAR ', this.socket);
+
    this.socket.emit('getAll', 'HELLO');
    this.socket.on('getAll', (message) => {
     this.tab = JSON.parse(message.message);
@@ -85,6 +87,7 @@ scrollToBottom(): void {
    //this.socket.on('sending message', this.message);
    console.log('sendMessage() => ', this.message );
    this.message = '';
+
   
   }
   clearChat(){

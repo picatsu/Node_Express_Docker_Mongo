@@ -7,7 +7,7 @@ services:
   td2:
     build:
       context: './td2'
-    container_name: td2
+    container_name: 'td2'
     ports: 
       - "3000:3000"
     depends_on:
@@ -18,6 +18,4 @@ services:
     container_name: 'td3'  
     ports:
       - "4000:4000" 
-    depends_on:
-      - td2
 

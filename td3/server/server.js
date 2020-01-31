@@ -5,9 +5,12 @@ const path = require('path');
 const bodyParser = require('body-parser'), fetch = require('node-fetch');
 const app = express();
 const server = require('http').createServer(app);
+server.listen(4000);
+
 const io = require('socket.io').listen(server);
-const PORT = 3000, request = require('request'), ENV = require('./config/variables');
-server.listen(PORT);
+const PORT = 3000, 
+    request = require('request'), 
+    ENV = require('./config/variables');
 console.log('Server is running');
 const rp = require('request-promise');
 let shouldAdd = true;
@@ -75,6 +78,7 @@ function asyncCall() {
         },
         json: true // Automatically stringifies the body to JSON
     };
+    console.log(' AFFICHAGE TD3', clientServerOptions);
     request(clientServerOptions, function (error, response, body) {
         if (error != null) {
             console.log('error:', error);
@@ -92,12 +96,15 @@ function asyncCall() {
 }
 function getAllData() {
     let va = "";
+    console.log("Appel func");
     fetch('http://' + ENV.urlApiTd2 + ':' + PORT + '/people/')
         .then(res => res.json())
         .then(data => {
         AllData = JSON.stringify(data);
         va = JSON.stringify(data);
     });
+    console.log('AFFICHAGE getAllData', va );
+
     return va;
 }
 function asyncCallDelete(ssn) {
@@ -109,6 +116,8 @@ function asyncCallDelete(ssn) {
         },
         json: true // Automatically stringifies the body to JSON
     };
+    console.log('AFFICHAGE asyncall', clientServerOptions );
+
     request(clientServerOptions, function (error, response, body) {
         if (error != null) {
             console.log('error:', error);
