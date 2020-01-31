@@ -11,8 +11,9 @@ import { ExtractComponent } from './extract/extract.component';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import {MatDividerModule} from '@angular/material/divider';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+import { environment } from '../../environments/environment';
 
-const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
+const config: SocketIoConfig = { url: 'http://'+environment.urlApiTd3+':'+environment.PORT, options: {} };
 
 
 @NgModule({

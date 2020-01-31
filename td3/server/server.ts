@@ -10,12 +10,13 @@ const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io').listen(server);
 const PORT = 3000,
-    request = require('request');
+    request = require('request'),
+    ENV = require('./config/variables');
 
 server.listen(PORT);
 console.log('Server is running');
 const rp = require('request-promise');
-const shouldAdd = true;
+let shouldAdd = true;
 
 const connections = [];
 let questionMap = new Map();
@@ -25,7 +26,6 @@ questionMap.set(2, ' Donne ton SSN');
 let cpt = 0;
 
 let dataMap = new Map();
-let serverResponse = '';
 
 let AllData = '';
 getAllData();
@@ -35,10 +35,14 @@ io.sockets.on('connection', (socket) => {
     cpt=0;
     io.sockets.emit('new message', { message: questionMap.get(cpt) });
 
+    socket.on('deleteLigne', (message ) => {
+        asyncCallDelete(message);
+    });
 
     socket.on('shouldAdd', (message ) => {
-       console.log('shouldADD ? ', message );
-    });
+        shouldAdd = message;        
+
+     });
 
     socket.on('disconnect', () => {
         connections.splice(connections.indexOf(socket), 1);
@@ -48,12 +52,10 @@ io.sockets.on('connection', (socket) => {
        
         io.sockets.emit('getAll', { message:  AllData }   );
         
-        console.log(' jai envoye toutes les donnees ', { message:  AllData });
 
     });
 
     socket.on('sending message', (message) => {
-        console.log('Message is received :', message);
         io.sockets.emit('new message', { message: ' ==> you said : ' + message });
 
         cpt++;
@@ -61,7 +63,6 @@ io.sockets.on('connection', (socket) => {
             io.sockets.emit('new message', { message: questionMap.get(cpt) });
 
         }
-        console.log('Message send  :', { message: questionMap.get(cpt) }, ' cpt = ', cpt);
 
         if (cpt == 1) {
             dataMap.set('birthname', message);
@@ -75,16 +76,10 @@ io.sockets.on('connection', (socket) => {
             dataMap.set('ssn', message);
             asyncCall();
             cpt = 0;
-            
             getAllData();
             
             ///io.sockets.emit('new message', { message: questionMap.get(cpt) });
         }
-
-
-
-
-
     });
 });
 
@@ -100,7 +95,7 @@ function asyncCall() {
 
 
     const clientServerOptions = {
-        uri: 'http://localhost:3011/people/',
+        uri: 'http://'+ENV.urlApiTd2+':'+PORT+'/people/',
         body: postData,
         method: 'POST',
         headers: {
@@ -115,15 +110,16 @@ function asyncCall() {
             console.log('error:', error);
         }
         else {
-
-            console.log('statusCode:',
-                response && response.statusCode, 'BODY ', body);
-
             io.sockets.emit('new message', {
                 message:
                     JSON.stringify(body)
             });
+            io.sockets.emit('new message', {
+                message:
+                'Donne ton birthname'
+            });
 
+            getAllData();
 
         }
 
@@ -132,7 +128,7 @@ function asyncCall() {
 
 function getAllData() {
     let va = "";
-    fetch('http://localhost:3011/people/')
+    fetch('http://'+ENV.urlApiTd2+':'+PORT+'/people/')
     .then(res => res.json())
     .then(data => {
         AllData = JSON.stringify(data);
@@ -140,8 +136,49 @@ function getAllData() {
     });
     return va;
 }
-app.use(express.static(__dirname + '/dist'));
 
+
+
+function asyncCallDelete(ssn: string) {
+    
+
+
+
+    const clientServerOptions = {
+        uri: 'http://'+ENV.urlApiTd2+':'+PORT+'/peoplebyssn/'+ssn,
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        json: true // Automatically stringifies the body to JSON
+
+    };
+
+
+    request(clientServerOptions, function (error, response, body) {
+        if (error != null) {
+            console.log('error:', error);
+        }
+        else {
+
+            io.sockets.emit('deleteLigne', {
+                message:
+                    JSON.stringify(body)
+            });
+           
+
+            getAllData();
+
+        }
+
+    });
+
+
+
+}
+
+
+app.use(express.static(__dirname + '/dist'));
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/dist/index.html');
 });

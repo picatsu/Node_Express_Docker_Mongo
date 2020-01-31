@@ -66,6 +66,9 @@ module.exports.createPeople = async function ( req, res){
     commune = externalDataCallCommune.data.nom;
     departement = externalDataCallDepartement.data.nom;
     shouldAdd = req.body.shouldAdd;
+    if(shouldAdd == null){
+        shouldAdd = true;
+    }
     console.log('should add ? ', shouldAdd);
     let newData = new PeopleSchema({
         _id: new mongoose.Types.ObjectId(),

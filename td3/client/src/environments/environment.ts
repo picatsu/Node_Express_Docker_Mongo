@@ -4,5 +4,11 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  PORT: 4000,
+  URLTD2: 'https://geo.api.gouv.fr',
+  urlMongo: 'db',
+  urlApiTd2: 'td2',
+  urlApiTd3: 'td3',
+  urlLocalhost: 'localhost'
 };

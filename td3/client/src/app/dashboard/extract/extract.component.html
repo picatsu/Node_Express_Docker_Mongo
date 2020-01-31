@@ -9,9 +9,9 @@
     </div>
     <div class="modal-body">
       <form>
-        <div class="form-group">
+        <div class="form-group" >
 
-          <mat-slide-toggle (change)="shouldADD()" labelPosition="before">{{isChecked}}</mat-slide-toggle>
+          <mat-slide-toggle   (change)="shouldADD()" labelPosition="before">{{isChecked}}</mat-slide-toggle>
 
         </div>
       </form>
@@ -22,40 +22,154 @@
   </ng-template>
 
 
-
-
-  <ng-template #content2 let-modal2 *ngIf="displayresult">
-    <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title"> TEST </h4>
-      <button type="button" class="close" aria-label="Close" (click)="modal2.dismiss('Cross click')">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      <form>
-        <div class="form-group">
-
-         DDDDDD
-
-        </div>
-      </form>
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-outline-dark" (click)="closeResult2()">Exit</button>
-    </div>
-  </ng-template>
-
+  
 
 
   <hr>
+<div class="alert alert-info" role="alert">  
+  <mat-slide-toggle  labelPosition="before" (change)="shouldADD()">Sauvegarde Activé ? :  {{isChecked}}</mat-slide-toggle>
+</div>
 
-  <mat-slide-toggle labelPosition="before" (change)="shouldADD()">Save ? {{isChecked}}</mat-slide-toggle>
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 
-  <div class="scrollBarClass">
+<br><br>
+  <div style="width: inherit; border: lightblue;"  >
+
+
+
+    
+      <div style="max-height: 400px; overflow-y:scroll;" #scrollMe  >
+        <!-- DIRECT CHAT PRIMARY -->
+        <div class="box box-primary direct-chat direct-chat-primary">
+
+
+          <div class="box-header with-border">
+            <h3 class="box-title">Direct Chat</h3>
+      
+            <div class="box-tools pull-right">
+              <span data-toggle="tooltip" title="" class="badge bg-light-blue" data-original-title="3 New Messages">{{messages.length}}</span>
+              <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+              </button>
+              <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="Contacts" data-widget="chat-pane-toggle">
+                <i class="fa fa-comments"></i></button>
+              <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+            </div>
+          </div>
+          <!-- /.box-header -->
+          <div class="box-body">
+            <!-- Conversations are loaded here -->
+            <div class="direct-chat-messages" *ngFor="let message of messages" style="height: fit-content;" >
+              <!-- Message. Default to the left -->
+
+             
+              <div
+              [ngClass]="{
+                'direct-chat-msg': message.server === true  , 
+                'direct-chat-msg right': message.server === false }"
+              >
+
+
+                <div class="direct-chat-info clearfix" >
+
+                  <span *ngIf="message.server == true"  class="direct-chat-name pull-left" style="color:red">Server  &nbsp;
+                    <span class="direct-chat-timestamp pull-right" >{{ message.date | date:'medium' }}</span>
+                  </span>
+                  <span *ngIf="message.server == false" class="direct-chat-name pull-right" style="color:blue">Client &nbsp;
+                    <span class="direct-chat-timestamp pull-right" >{{ message.date | date:'medium' }}</span> 
+                  </span>
+                  
+                </div>
+                <!-- /.direct-chat-info -->
+                <img class="direct-chat-img"  alt="Message User Image"  *ngIf="message.server == true" src="https://bootdey.com/img/Content/user_2.jpg" slot="start" />
+                <img class="direct-chat-img" alt="Message User Image"  *ngIf="message.server == false" src="https://bootdey.com/img/Content/user_1.jpg" slot="start" />
+
+                <div class="direct-chat-text"   >
+                {{ message.serverMessage}}
+                   
+                </div>
+                <!-- /.direct-chat-text -->
+              </div>
+              <!-- /.direct-chat-msg -->
+      
+              <!-- Message to the right -->
+
+
+
+
+           
+
+
+              
+              <!-- /.direct-chat-msg -->
+            </div>
+            <!--/.direct-chat-messages-->
+      
+            <!-- Contacts are loaded here -->
+            <div class="direct-chat-contacts">
+              <ul class="contacts-list">
+                <li>
+                  <a href="#">
+                    <img class="contacts-list-img" src="https://bootdey.com/img/Content/user_1.jpg">
+      
+                    <div class="contacts-list-info">
+                          <span class="contacts-list-name">
+                            Count Dracula
+                            <small class="contacts-list-date pull-right">2/28/2015</small>
+                          </span>
+                      <span class="contacts-list-msg">How have you been? I was...</span>
+                    </div>
+                    <!-- /.contacts-list-info -->
+                  </a>
+                </li>
+                <!-- End Contact Item -->
+              </ul>
+              <!-- /.contatcts-list -->
+            </div>
+            <!-- /.direct-chat-pane -->
+          </div>
+
+        
+
+
+          <!-- /.box-body -->
+          <div class="box-footer">
+            <form action="#" method="post">
+              <div class="input-group">
+                <input type="text" name="message" placeholder="Type Message ..." class="form-control"   [(ngModel)]="message" >
+                &nbsp; &nbsp; &nbsp;
+                 <span class="input-group-btn">
+                      <button type="submit" class="btn btn-primary btn-flat" (click)="sendMessage()" >Send</button>   &nbsp;
+                      <button type="delete" class="btn btn-danger btn-flat" (click)="clearChat()" >Clear</button>
+                    </span>
+              </div>
+            </form>
+          </div>
+          <!-- /.box-footer-->
+        </div>
+        <!--/.direct-chat -->
+      </div>
+      
+      
+      
+      
+  
+  
+   
+  </div>
+<!-- -->
+  <div class="scrollBarClass" style="width: 600px;">
     <div *ngFor="let message of messages.reverse()">
+      <!-- 
+      <div class="speech-bubble-ds">
+        <p><strong>Demo speech bubble</strong></p>
+        <p>This is CSS speech bubble with borders and drop shadow.</p>
+        <div class="speech-bubble-ds-arrow"></div>
+    </div>
+
+    
       <div role="alert" [ngClass]="{
       'alert alert-danger': message.server ===  null,
-      'alert alert-primary': message.server === true  , 
+      'speech-bubble': message.server === true  , 
       'alert alert-secondary': message.server === false }">
         {{message.serverMessage}}
 
@@ -66,25 +180,23 @@
     </div>
   </div>
   <input type="text" class="form-control" (keydown.enter)="sendMessage()" aria-describedby="addon-wrapping"
-    [(ngModel)]="message">
+    [(ngModel)]="message" style="width: 600px;" placeholder="Repondre">
   <br><br>
 
 
   <button type="button" class="btn btn-primary" (click)="sendMessage()">Send </button>
 
-
-  <br>
-
-  <br>
-
-  <br>
+  -->
+  </div>
+  </div>
+  <br><br>
+  <mat-divider></mat-divider><br>
+  <h3> Table d'affichage depuis BDD</h3>
   <input type="text" id="input3-group2" [(ngModel)]="searchKeyword" name="input3-group2" class="form-control mr-sm-2"
-    placeholder="Rechercher">
+    placeholder="Rechercher dans la table ">
 
 
-  <br>
-
-  <br>
+  <br><br>
 
   <table class="table table-hover table-dark">
     <thead>
@@ -97,6 +209,7 @@
         <th>Departement</th>
         <th>Pays</th>
         <th>Naissance</th>
+        <th>Delete</th>
 
 
       </tr>
@@ -104,9 +217,9 @@
     <tbody>
       <tr *ngFor="let item of tab | filter: searchKeyword">
         <th scope="row"> <span class="badge badge-primary" [ngStyle]="{'font-size.px':15}"
-            (click)="open(content, item.Build )"> {{item._id}} </span></th>
+            > {{item._id}} </span></th>
         <td>{{item.lastname}}</td>
-        <td> <a href="https://google.fr" target="_blank" class="badge badge-pill badge-light">{{item.birthname}}</a>
+        <td> {{item.birthname}}
         </td>
         <td [ngClass]="{'text-danger': item.Branche === 'RELEASE'}">{{item.ssn}}</td>
         <td>{{item.commune}}</td>
@@ -114,13 +227,16 @@
         <td> <span class="badge badge-light" [ngStyle]="{'font-size.px':15}"> {{item.pays}} </span> </td>
         <td> <span class="badge badge-success" [ngStyle]="{'font-size.px':15}"> {{item.naissance}} </span> </td>
 
-
-
+        <button type="button" class="btn btn-outline-danger"  (click)="deleteRow(item.ssn)">Delete</button>
       </tr>
 
 
     </tbody>
   </table>
 
+  <button type="submit" class="btn btn-primary btn-flat" (click)="downloadCsv()" >Export CSV</button>   &nbsp;
 
+  <div style="height: 200px;"> 
+
+  </div>
 </div>
