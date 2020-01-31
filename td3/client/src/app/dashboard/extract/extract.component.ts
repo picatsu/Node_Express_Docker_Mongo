@@ -131,7 +131,9 @@ scrollToBottom(): void {
      messageReturn = message.message;
 
    });
-   this.toastr.success('Delete Sucessfull', messageReturn);
+   this.toastr.success( ssn + ' DELETED ', 'Delete Sucessfull', {
+    timeOut: 1500
+  });
 
    this.updateTable();
   }

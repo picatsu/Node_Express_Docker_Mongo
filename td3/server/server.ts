@@ -15,7 +15,7 @@ const PORT = 3000,
 server.listen(PORT);
 console.log('Server is running');
 const rp = require('request-promise');
-const shouldAdd = true;
+let shouldAdd = true;
 
 const connections = [];
 let questionMap = new Map();
@@ -25,7 +25,6 @@ questionMap.set(2, ' Donne ton SSN');
 let cpt = 0;
 
 let dataMap = new Map();
-let serverResponse = '';
 
 let AllData = '';
 getAllData();
@@ -41,7 +40,9 @@ io.sockets.on('connection', (socket) => {
     });
 
     socket.on('shouldAdd', (message ) => {
-        console.log('shouldADD ? ', message );
+        shouldAdd = message;        
+        console.log('shouldADD ? ', message, ' and locally : ', shouldAdd );
+
      });
 
     socket.on('disconnect', () => {
