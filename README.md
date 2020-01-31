@@ -21,9 +21,18 @@ Yassine JAA
         ├── server.js           
         ├── DockerFile          
         └── package.json  
-    ├── td3                 # API du TP3 : HTTP and socket with Front
-        ├── Server           
-        ├── Front          
+    ├── td3                 
+
+        ├── client          # Angular Project 
+            ├── src           
+            ├── angular.json          
+            └── package.json
+
+        ├── server          # API du Td3 : HTTP and socket with Front
+            ├── server.js 
+            ├── server.ts 
+            ├── Dockerfile         
+            └── package.json          
                      
     
 <br>
