@@ -15,7 +15,7 @@ const PORT = 3000,
 server.listen(PORT);
 console.log('Server is running');
 const rp = require('request-promise');
-const shouldAdd = true;
+let shouldAdd = true;
 
 const connections = [];
 let questionMap = new Map();
@@ -25,7 +25,6 @@ questionMap.set(2, ' Donne ton SSN');
 let cpt = 0;
 
 let dataMap = new Map();
-let serverResponse = '';
 
 let AllData = '';
 getAllData();
@@ -37,11 +36,11 @@ io.sockets.on('connection', (socket) => {
 
     socket.on('deleteLigne', (message ) => {
         asyncCallDelete(message);
-       console.log('row deleted ? ', message );
     });
 
     socket.on('shouldAdd', (message ) => {
-        console.log('shouldADD ? ', message );
+        shouldAdd = message;        
+
      });
 
     socket.on('disconnect', () => {
@@ -52,12 +51,10 @@ io.sockets.on('connection', (socket) => {
        
         io.sockets.emit('getAll', { message:  AllData }   );
         
-        console.log(' jai envoye toutes les donnees ', { message:  AllData });
 
     });
 
     socket.on('sending message', (message) => {
-        console.log('Message is received :', message);
         io.sockets.emit('new message', { message: ' ==> you said : ' + message });
 
         cpt++;
@@ -65,7 +62,6 @@ io.sockets.on('connection', (socket) => {
             io.sockets.emit('new message', { message: questionMap.get(cpt) });
 
         }
-        console.log('Message send  :', { message: questionMap.get(cpt) }, ' cpt = ', cpt);
 
         if (cpt == 1) {
             dataMap.set('birthname', message);
@@ -114,8 +110,7 @@ function asyncCall() {
         }
         else {
 
-            console.log('statusCode:',
-                response && response.statusCode, 'BODY ', body);
+        
 
             io.sockets.emit('new message', {
                 message:
@@ -164,16 +159,12 @@ function asyncCallDelete(ssn: string) {
 
     };
 
-    console.log(' client ServerOptions : ', clientServerOptions);
 
     request(clientServerOptions, function (error, response, body) {
         if (error != null) {
             console.log('error:', error);
         }
         else {
-
-            console.log('statusCode:',
-                response && response.statusCode, 'BODY ', body);
 
             io.sockets.emit('deleteLigne', {
                 message:

@@ -7,32 +7,11 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import { Message } from './message';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { Angular5Csv } from 'angular5-csv/dist/Angular5-csv';
+import { ToastrService } from 'ngx-toastr';
 
 import { DatePipe } from '@angular/common';
 
-
-@Component({
-  selector: 'ngbd-modal-content',
-  template: `
-    <div class="modal-header">
-      <h4 class="modal-title">Hi there!</h4>
-      <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      <p>Hello, {{name}}!</p>
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
-    </div>
-  `
-})
-export class NgbdModalContent {
-  @Input() name;
-
-  constructor(public activeModal: NgbActiveModal) {}
-}
 
 
 @Component({
@@ -53,7 +32,7 @@ export class ExtractComponent implements OnInit, AfterViewChecked  {
   private socket; 
   tab = [];
   toogled = true;
-  isChecked = true;
+  isChecked: boolean;
   searchKeyword: any;
   displayresult: boolean = false;
   @HostListener('document:keydown', ['$event'])
@@ -64,7 +43,8 @@ export class ExtractComponent implements OnInit, AfterViewChecked  {
   }
 
 
-  constructor( private modalService: NgbModal ) {  
+  constructor( private modalService: NgbModal,
+    private toastr: ToastrService ) {  
     this.socket = io(this.url);
     this.isChecked = true;
 
@@ -74,8 +54,9 @@ export class ExtractComponent implements OnInit, AfterViewChecked  {
  
   
   shouldADD() {
-    this.socket.emit('shouldAdd', this.isChecked);
     this.isChecked = !this.isChecked;
+
+    this.socket.emit('shouldAdd', this.isChecked);
   }
   
   closeResult2(){
@@ -142,12 +123,18 @@ scrollToBottom(): void {
   }
 
   deleteRow(ssn: string){
+    let messageReturn = '';
   this.socket.emit('deleteLigne', ssn);
     this.socket.on('deleteLigne', (message) => {
      /// AFFICHAGE TOAST 
+     console.log('je supprime sa :', message);
+     messageReturn = message.message;
+
    });
-   
-   console.log('je supprime sa :', ssn);
+   this.toastr.success( ssn + ' DELETED ', 'Delete Sucessfull', {
+    timeOut: 1500
+  });
+
    this.updateTable();
   }
 
@@ -215,6 +202,21 @@ scrollToBottom(): void {
       this.closeResult = `Closed with: ${result}`;
       this.socket.emit('shouldAdd', this.isChecked);
     });
+  }
+
+
+
+  downloadCsv(){
+    var options = { 
+      fieldSeparator: ';',
+      quoteStrings: '"',
+      decimalseparator: '.',
+      showLabels: true, 
+      useBom: true,
+      headers: ['_id', 'LastName', 'BirthName', 'SSN', 'Commune', 'Departement', 'Pays', 'Naissance']
+    };
+   
+    new Angular5Csv(this.tab, 'export.csv', options);
   }
 
   

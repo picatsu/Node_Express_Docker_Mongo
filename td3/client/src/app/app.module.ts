@@ -19,7 +19,6 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { NbChatModule } from '@nebular/theme';
 import { NbThemeModule } from '@nebular/theme';
 
-
 @NgModule({
   declarations: [
     AppComponent , JwPaginationComponent ],
@@ -38,8 +37,7 @@ import { NbThemeModule } from '@nebular/theme';
     ToastrModule.forRoot(),
     MatDialogModule,
     NbChatModule,
-    NbThemeModule.forRoot(),
-     
+    NbThemeModule.forRoot()     
 
       ],
   bootstrap: [AppComponent],
