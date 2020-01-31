@@ -7,9 +7,9 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import { Message } from './message';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { Angular5Csv } from 'angular5-csv/dist/Angular5-csv';
 
 import { DatePipe } from '@angular/common';
-
 
 @Component({
   selector: 'ngbd-modal-content',
@@ -215,6 +215,21 @@ scrollToBottom(): void {
       this.closeResult = `Closed with: ${result}`;
       this.socket.emit('shouldAdd', this.isChecked);
     });
+  }
+
+
+
+  downloadCsv(){
+    var options = { 
+      fieldSeparator: ';',
+      quoteStrings: '"',
+      decimalseparator: '.',
+      showLabels: true, 
+      useBom: true,
+      headers: ['_id', 'LastName', 'BirthName', 'SSN', 'Commune', 'Departement', 'Pays', 'Naissance']
+    };
+   
+    new Angular5Csv(this.tab, 'export.csv', options);
   }
 
   
