@@ -5,16 +5,14 @@ services:
     ports:
       - "27017:27017"
   td2:
-    build:
-      context: './td2'
+    image: ezzefiohez/technologtd2
     container_name: 'td2'
     ports: 
       - "3000:3000"
     depends_on:
       - db
   td3:
-    build:
-      context: './td3/server'
+    image: ezzefiohez/technologtd3
     container_name: 'td3'  
     ports:
       - "4000:4000" 
