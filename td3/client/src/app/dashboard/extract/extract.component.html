@@ -217,7 +217,7 @@
     <tbody>
       <tr *ngFor="let item of tab | filter: searchKeyword">
         <th scope="row"> <span class="badge badge-primary" [ngStyle]="{'font-size.px':15}"
-            (click)="open(content, item.Build )"> {{item._id}} </span></th>
+            > {{item._id}} </span></th>
         <td>{{item.lastname}}</td>
         <td> {{item.birthname}}
         </td>
