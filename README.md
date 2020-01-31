@@ -53,15 +53,15 @@ Yassine JAA
 
 <h3>PHOTO Chat : </h3>
 
-![Alt text](Chat.png?raw=true "On Start")
+![Alt text](Chat.PNG?raw=true "On Start")
 <br></br>
 <h3>PHOTO Recherche : </h3>
 
-![Alt text](Recherche.png?raw=true "On Start")
+![Alt text](Recherche.PNG?raw=true "On Start")
 <br></br>
 <h3>PHOTO Base de données : </h3>
 
-![Alt text](BDD.png?raw=true "On Start")
+![Alt text](BDD.PNG?raw=true "On Start")
 
 <h2>IMAGE DOCKER</h2>
 
