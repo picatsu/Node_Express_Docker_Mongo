@@ -17,3 +17,4 @@ echo "module.exports = {
   urlApiTd3: 'td3',
   urlLocalhost: 'localhost'
 };" > variables.js 
+cd ../..

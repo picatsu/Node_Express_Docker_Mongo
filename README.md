@@ -16,7 +16,7 @@ Yassine JAA
 <li>2- Quel est votre prénom ?</li>
 <li>3- Quel est votre SNN ?</li>
 
-    .
+    
     ├── td2                 # API du TP2 : Only HTTP with MongoDB
         ├── server.js           
         ├── DockerFile          
@@ -29,8 +29,8 @@ Yassine JAA
             └── package.json
 
         ├── server          # API du Td3 : HTTP and socket with Front
-            ├── server.js 
             ├── server.ts 
+            ├── server.js   (equivalent)
             ├── Dockerfile         
             └── package.json          
                      
@@ -43,11 +43,14 @@ Yassine JAA
 
 <h3> Technologies : </h3>
 
-<li>node.js</li>
-<li>socketIO</li>
-<li>mongoDB</li>
-<li>Docker</li>
+<li>Node.js/ExpressJs</li>
+<li>Angular</li>
 <li>RestApi</li>
+<li>MongoDB</li>
+<li>Docker</li>
+<li>SocketIO</li>
+
+
 
 <h3> Fonctionnalités TD2 : </h3>
 
@@ -57,30 +60,44 @@ Yassine JAA
 
 <h3> Fonctionnalités TD3 : </h3>
 
-<li>Communication avec socketIO</li>
-<li>Choix d'enregistrement dans la base de données</li>
+<li>Communication avec socketIO entre front et back et HTTP entre back td3 et back td2 </li>
+<li>Choix de sauvegarde dans la base de données</li>
 <li>Saisie des informations</li>
 <li>Supprimer graphiquement les documents dans la Base de données</li>
 <li>Affichage du contenu de la base de données </li>
-<li>recherche dans base de données</li>
+<li>Recherche dans base de données</li>
 
 <br>
 <h3>PHOTO Save : </h3>
 
-![Alt text](Save.PNG?raw=true "On Start")
+![Alt text](./assets/dialog.PNG?raw=true "On Start")
 <br></br>
 
 <h3>PHOTO Chat : </h3>
 
-![Alt text](Chat.PNG?raw=true "On Start")
+![Alt text](./assets/Chat.PNG?raw=true "On Start")
 <br></br>
-<h3>PHOTO Recherche : </h3>
+<h3>Affichage donnée avec filtre </h3>
 
-![Alt text](Recherche.PNG?raw=true "On Start")
+![Alt text](./assets/table.PNG?raw=true "On Start")
 <br></br>
-<h3>PHOTO Base de données : </h3>
 
-![Alt text](BDD.PNG?raw=true "On Start")
+<h3>Theme blanc </h3>
+
+![Alt text](./assets/whiteTheme.PNG?raw=true "On Start")
+<br></br>
+
+<h3>Theme Dark (default) </h3>
+
+![Alt text](./assets/darkTheme.PNG?raw=true "On Start")
+<br></br>
+
+<h2> Tester via DOCKER ou tester en LOCAL  </h2>
+    <li> Docker : chmod +777 ChangeToDockerMode.sh && ./ChangeToDockerMode.sh </li>
+    <li> Local : chmod +777 ChangeToLocalMode.sh && ./ChangeToLocalMode.sh </li>
+        <p> Tips for LocalMode: chmod +777 launchLocal.sh && ./launchLocal.sh</p>
+        <p> Chat Marche Beaucoup Mieux en Locale </p>
+
 
 <h2>IMAGE DOCKER</h2>
 
@@ -88,6 +105,11 @@ Yassine JAA
 
 <h2>RUN PROJET </h2>
 <h3> TO RUN server TD3 WITH ANGULAR FRONT  : </h3>
+
+```
+chmod +777 launchLocal.sh && ./launchLocal.sh 
+```
+<h3> TO RUN server TD3 WITH ANGULAR FRONT in Different Bash : </h3>
 
 ```javascript
 cd ../td3/client   
@@ -113,3 +135,9 @@ npm start
 ```javascript
 177023523800522
 ```
+
+
+<br>
+<h1> Conclusion  </h1>
+<p> A la compilation du projet angular, un fichier dist est generer puis servit par le server du td3 sur son localhost:4000  </p>
+<p> It Was Fun, it's been a good journey  ... Docker Was Hell :)  </p>
