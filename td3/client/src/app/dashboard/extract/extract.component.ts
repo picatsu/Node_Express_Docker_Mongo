@@ -8,31 +8,10 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 import { Message } from './message';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Angular5Csv } from 'angular5-csv/dist/Angular5-csv';
+import { ToastrService } from 'ngx-toastr';
 
 import { DatePipe } from '@angular/common';
 
-@Component({
-  selector: 'ngbd-modal-content',
-  template: `
-    <div class="modal-header">
-      <h4 class="modal-title">Hi there!</h4>
-      <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      <p>Hello, {{name}}!</p>
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
-    </div>
-  `
-})
-export class NgbdModalContent {
-  @Input() name;
-
-  constructor(public activeModal: NgbActiveModal) {}
-}
 
 
 @Component({
@@ -64,7 +43,8 @@ export class ExtractComponent implements OnInit, AfterViewChecked  {
   }
 
 
-  constructor( private modalService: NgbModal ) {  
+  constructor( private modalService: NgbModal,
+    private toastr: ToastrService ) {  
     this.socket = io(this.url);
     this.isChecked = true;
 
@@ -143,12 +123,16 @@ scrollToBottom(): void {
   }
 
   deleteRow(ssn: string){
+    let messageReturn = '';
   this.socket.emit('deleteLigne', ssn);
     this.socket.on('deleteLigne', (message) => {
      /// AFFICHAGE TOAST 
+     console.log('je supprime sa :', message);
+     messageReturn = message.message;
+
    });
-   
-   console.log('je supprime sa :', ssn);
+   this.toastr.success('Delete Sucessfull', messageReturn);
+
    this.updateTable();
   }
 
