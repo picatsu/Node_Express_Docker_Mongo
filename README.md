@@ -55,9 +55,19 @@ Yassine JAA
                      
 
 <h2> Tester via DOCKER ou tester en LOCAL  </h2>
-    <li> Docker : ./ChangeToDockerMode.sh && docker-compose build </li>
-    <li> Local : ./ChangeToLocalMode.sh && ./launchLocal.sh </li>
-        <p> Chat Marche Beaucoup Mieux en Locale </p>
+   <p>  Docker : </p>
+
+```
+ ./ChangeToDockerMode.sh && docker-compose build 
+
+```
+<p> Local :</p> 
+     
+```
+./ChangeToLocalMode.sh && ./launchLocal.sh 
+
+```
+<p> Chat Marche Beaucoup Mieux en Locale </p>
 
 
 <h2>RUN PROJET </h2>
