@@ -53,7 +53,46 @@ Yassine JAA
             ├── Dockerfile         
             └── package.json          
                      
-    
+
+<h2> Tester via DOCKER ou tester en LOCAL  </h2>
+    <li> Docker : ./ChangeToDockerMode.sh && docker-compose build </li>
+    <li> Local : ./ChangeToLocalMode.sh && ./launchLocal.sh </li>
+        <p> Chat Marche Beaucoup Mieux en Locale </p>
+
+
+<h2>RUN PROJET </h2>
+<h3> TO RUN server TD3 WITH ANGULAR FRONT  : </h3>
+
+```
+chmod +777 launchLocal.sh && ./launchLocal.sh 
+```
+<h3> TO RUN server TD3 WITH ANGULAR FRONT in Different Bash : </h3>
+
+```javascript
+cd ../td3/client   
+npm install 
+npm start
+```
+
+```javascript
+cd ../td3/server 
+npm install 
+npm start
+```
+
+<h3> TO RUN server TD2 : </h3>
+
+```javascript
+cd ../td2/ 
+npm install 
+npm start
+```
+<p>Exemple de SNN pour les tests</p>
+
+```javascript
+177023523800522
+```
+   
 
 <h3> Fonctionnalités TD2 : </h3>
 
@@ -95,48 +134,8 @@ Yassine JAA
 ![Alt text](./assets/darkTheme.PNG?raw=true "On Start")
 <br></br>
 
-<h2> Tester via DOCKER ou tester en LOCAL  </h2>
-    <li> Docker : chmod +777 ChangeToDockerMode.sh && ./ChangeToDockerMode.sh </li>
-    <li> Local : chmod +777 ChangeToLocalMode.sh && ./ChangeToLocalMode.sh </li>
-        <p> Tips for LocalMode: chmod +777 launchLocal.sh && ./launchLocal.sh</p>
-        <p> Chat Marche Beaucoup Mieux en Locale </p>
-
-
-<h2>RUN PROJET </h2>
-<h3> TO RUN server TD3 WITH ANGULAR FRONT  : </h3>
-
-```
-chmod +777 launchLocal.sh && ./launchLocal.sh 
-```
-<h3> TO RUN server TD3 WITH ANGULAR FRONT in Different Bash : </h3>
-
-```javascript
-cd ../td3/client   
-npm install 
-npm start
-```
-
-```javascript
-cd ../td3/server 
-npm install 
-npm start dev 
-```
-
-<h3> TO RUN server TD2 : </h3>
-
-```javascript
-cd ../td2/ 
-npm install 
-npm start
-```
-<p>Exemple de SNN pour les tests</p>
-
-```javascript
-177023523800522
-```
-
 
 <br>
 <h1> Conclusion  </h1>
 <p> A la compilation du projet angular, un fichier dist est generer puis servit par le server du td3 sur son localhost:4000  </p>
-<p> It Was Fun, it's been a good journey  ... Docker Was Hell :)  </p>
+<h3> It Was Fun, it's been a good journey ... Docker Was Hell :)</h3>
